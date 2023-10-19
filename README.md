@@ -1,6 +1,6 @@
 # Group84
 #### Problem domain
-The problem domain our team plans to focus on is a recipe organizer.
+The problem domain this team plans to focus on is a recipe organizer.
 
 #### Software Specification
 This team is thinking of developing an application that can store recipes and let users add recipes of their own. The application would allow the user to search for recipes using a specific ingredient, culture, or by specific nutritional contents (ex. protein, vitamins, etc.). The user can then adjust the portion size of each recipe, modifying the amount of each ingredient required. In addition, the user would be able to add recipes to a collection, which could function like a daily meal plan and allow the user to see the total nutritional value of all the included recipes. Given the meal plan, this application would then be able to generate a shopping list based on the ingredients in each recipe and the portions they want to cook. In addition to this, the application can also calculate the total calories given the meal plan to help with the user's health management.
