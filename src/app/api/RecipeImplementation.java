@@ -1,5 +1,6 @@
 package app.api;
 
+import java.security.Key;
 import java.util.ArrayList;
 import okhttp3.*;
 import org.json.JSONArray;
@@ -7,10 +8,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Iterator;
+
+import entity.Recipe;
 
 public class RecipeImplementation implements recipeAPI {
-
-    private static final String API_URL = "https://api.edamam.com/api/recipes/v2";
 
     private static final String API_TOKEN = System.getenv("API_TOKEN");
     private static final String APP_ID = System.getenv("APP_ID");
@@ -56,7 +58,14 @@ public class RecipeImplementation implements recipeAPI {
                     ArrayList<String> recipeCulture = new ArrayList<>();
                     for (int k = 0; k < cuisine.length(); k++)
                         recipeCulture.add(cuisine.getString(k));
-                    Recipe recipe = new Recipe(name, recipeIngredients, "", calories, recipeCulture, "1", url);
+                    ArrayList<String> recipeNutrients = new ArrayList<>();
+                    JSONObject nutrients = currRecipe.getJSONObject("totalNutrients");
+                    for (Iterator<String> it = nutrients.keys(); it.hasNext(); ) {
+                        String key = it.next();
+                        recipeNutrients.add(nutrients.getJSONObject(key).getString("label"));
+                    }
+                    Integer portion = currRecipe.getInt("yield");
+                    Recipe recipe = new Recipe(name, recipeIngredients, recipeNutrients, calories, recipeCulture, portion, url);
                     recipes.add(recipe);
                 }
 
@@ -81,10 +90,12 @@ public class RecipeImplementation implements recipeAPI {
         RecipeImplementation imp = new RecipeImplementation();
         ArrayList<Recipe> recipes = imp.getResults("chicken");
         System.out.println(recipes);
-        System.out.println(recipes.get(0).calories);
-        System.out.println(recipes.get(0).ingredients);
-        System.out.println(recipes.get(0).culture);
-        System.out.println(recipes.get(0).url);
+        System.out.println(recipes.get(0).getCalories());
+        System.out.println(recipes.get(0).getIngredients());
+        System.out.println(recipes.get(0).getCulture());
+        System.out.println(recipes.get(0).getUrl());
+        System.out.println(recipes.get(0).getNutrients());
+        System.out.println(recipes.get(0).getPortion());
     }
 
 }
