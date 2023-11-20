@@ -20,7 +20,7 @@ public class SearchUseCaseFactory {
             SearchController searchController = createSearchUseCase(viewManagerModel, searchViewModel);
             return new SearchView(searchController, searchViewModel);
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Could not open user data file.");
+            JOptionPane.showMessageDialog(null, "Failed.");
         }
 
         return null;
@@ -37,11 +37,4 @@ public class SearchUseCaseFactory {
         return new SearchController(searchInteractor);
     }
 
-    private static SearchController createClearUseCase(ViewManagerModel viewManagerModel, SearchViewModel searchViewModel) throws IOException {
-        SearchOutputBoundary searchOutputBoundary = new SearchPresenter(searchViewModel, viewManagerModel);
-
-        SearchInputBoundary searchInteractor = new SearchInteractor(searchOutputBoundary);
-
-        return new SearchController(searchInteractor);
-    }
 }
