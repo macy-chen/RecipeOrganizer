@@ -1,6 +1,5 @@
 package use_case.shopping_list;
-
-import entity.Recipe;
+import entity.RecipeCollection;
 
 public class SLInputData {
 

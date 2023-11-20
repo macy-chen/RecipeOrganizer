@@ -20,7 +20,7 @@ public class SLInteractor implements SLInputBoundary {
     }
 
     @Override
-    public void execute(SLInputData slInputData) { //actual logic for
+    public void execute(SLInputData slInputData) {
         RecipeCollection recipeCollection = slInputData.getRecipeCollection();
         if (recipeCollection == null){
             slPresenter.prepareFailView("Recipe Collection is empty");
@@ -30,9 +30,8 @@ public class SLInteractor implements SLInputBoundary {
             ShoppingList shoppingList = slFactory.create(slInputData.getRecipeCollection());
             slDataAccessObject.save(shoppingList);
 
-            //TODO: figure out what you need to output for success view
-            SLOutputData slOutputData =  new SLOutputData();
-            //slPresenter.prepareSuccessView(slOutputData);
+            SLOutputData slOutputData =  new SLOutputData(shoppingList.toString(), false);
+            slPresenter.prepareSuccessView(slOutputData);
         }
     }
 }
