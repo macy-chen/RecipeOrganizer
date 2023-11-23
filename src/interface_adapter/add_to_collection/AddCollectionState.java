@@ -26,4 +26,8 @@ public class AddCollectionState {
     public List<Recipe> getRecipeResults() {
         return recipeResults;
     }
+
+    public void setRecipeResults(List<Recipe> results) {
+        this.recipeResults = results;
+    }
 }
