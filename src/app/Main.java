@@ -1,18 +1,16 @@
 package app;
 
-import data_access.FileCollectionDataAccessObject;
-import interface_adapter.add_to_collection.AddCollectionViewModel;
+import interface_adapter.SearchViewModel;
 import interface_adapter.ViewManagerModel;
-import view.ResultsView;
+import view.SearchView;
 import view.ViewManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
-        JFrame application = new JFrame("Search Results");
+        JFrame application = new JFrame("Search Example");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         CardLayout cardLayout = new CardLayout();
@@ -22,17 +20,10 @@ public class Main {
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         new ViewManager(views, cardLayout, viewManagerModel);
 
-        AddCollectionViewModel addCollectionViewModel = new AddCollectionViewModel();
+        SearchViewModel searchViewModel = new SearchViewModel();
 
-        FileCollectionDataAccessObject collectionDataAccessObject;
-        try {
-            collectionDataAccessObject = new FileCollectionDataAccessObject("./recipeCollection.csv");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        ResultsView resultsView = AddCollectionUseCaseFactory.create(viewManagerModel, addCollectionViewModel, collectionDataAccessObject);
-        views.add(resultsView, resultsView.viewName);
+        SearchView searchView = SearchUseCaseFactory.create(viewManagerModel, searchViewModel);
+        views.add(searchView, searchView.viewName);
 
         application.pack();
         application.setVisible(true);
