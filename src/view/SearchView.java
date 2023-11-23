@@ -30,14 +30,14 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         this.searchViewModel = searchViewModel;
         searchViewModel.addPropertyChangeListener(this);
 
-        JLabel title = new JLabel(searchViewModel.TITLE_LABEL);
+        JLabel title = new JLabel(SearchViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         LabelTextPanel keywordInfo = new LabelTextPanel(new JLabel(SearchViewModel.KEYWORD_LABEL), keywordInputField);
 
         JPanel buttons = new JPanel();
-        search = new JButton(searchViewModel.SEARCH_BUTTON_LABEL);
-        showCollection = new JButton(searchViewModel.SHOW_COLLECTION_BUTTON_LABEL);
+        search = new JButton(SearchViewModel.SEARCH_BUTTON_LABEL);
+        showCollection = new JButton(SearchViewModel.SHOW_COLLECTION_BUTTON_LABEL);
         buttons.add(search);
         buttons.add(showCollection);
 
