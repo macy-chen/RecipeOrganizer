@@ -13,8 +13,6 @@ public class Main {
         JFrame application = new JFrame("Search Example");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-
-
         CardLayout cardLayout = new CardLayout();
         JPanel views = new JPanel(cardLayout);
         application.add(views);
@@ -29,6 +27,5 @@ public class Main {
 
         application.pack();
         application.setVisible(true);
-
     }
 }

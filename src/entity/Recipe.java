@@ -77,3 +77,4 @@ public class Recipe {
     public void setUrl(String url) {
         this.url = url;
     }
+}
