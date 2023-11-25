@@ -1,6 +1,7 @@
 package app;
 
 import interface_adapter.*;
+import interface_adapter.add_to_collection.AddCollectionViewModel;
 import use_case.SearchInputBoundary;
 import use_case.SearchInteractor;
 import use_case.SearchOutputBoundary;
@@ -14,10 +15,10 @@ public class SearchUseCaseFactory {
     private SearchUseCaseFactory() {}
 
     public static SearchView create(
-            ViewManagerModel viewManagerModel, SearchViewModel searchViewModel) {
+            ViewManagerModel viewManagerModel, SearchViewModel searchViewModel, AddCollectionViewModel addCollectionViewModel) {
 
         try {
-            SearchController searchController = createSearchUseCase(viewManagerModel, searchViewModel);
+            SearchController searchController = createSearchUseCase(viewManagerModel, searchViewModel, addCollectionViewModel);
             return new SearchView(searchController, searchViewModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Failed.");
@@ -26,10 +27,10 @@ public class SearchUseCaseFactory {
         return null;
     }
 
-    private static SearchController createSearchUseCase(ViewManagerModel viewManagerModel, SearchViewModel searchViewModel) throws IOException {
+    private static SearchController createSearchUseCase(ViewManagerModel viewManagerModel, SearchViewModel searchViewModel, AddCollectionViewModel addCollectionViewModel) throws IOException {
 
         // Notice how we pass this method's parameters to the Presenter.
-        SearchOutputBoundary searchOutputBoundary = new SearchPresenter(searchViewModel, viewManagerModel);
+        SearchOutputBoundary searchOutputBoundary = new SearchPresenter(searchViewModel, viewManagerModel, addCollectionViewModel);
 
 
         SearchInputBoundary searchInteractor = new SearchInteractor(searchOutputBoundary);
