@@ -19,14 +19,25 @@ public class ShoppingListDataAccessObject implements SLDataAccessInterface {
     }
 
     @Override
-    public void save(ShoppingList shoppingList) throws IOException {
-        ArrayList<Ingredient> ingredients = shoppingList.getIngredients();
+    public void save(ShoppingList shoppingList){
+        BufferedWriter writer;
 
-        FileWriter file = new FileWriter(txtPath);
-        BufferedWriter bw = new BufferedWriter(file);
-        bw.write("Ingredient \t Amount \t Unit \n"); //header
-        bw.write("-----------------------");
+        try {
+            writer = new BufferedWriter(new FileWriter(txtPath));
 
-        bw.write(shoppingList.toString());
+//            String header = String.format("%-20s %-15s %s", "Ingredient", "Amount", "Unit");
+//            writer.write(header);
+//            writer.newLine();
+//            writer.write("---------------------------------------------");
+//            writer.newLine();
+
+            writer.write(shoppingList.ingredientstoString());
+
+            writer.close();
+
+        } catch (IOException e){
+            throw new RuntimeException(e);
+        }
+
     }
 }

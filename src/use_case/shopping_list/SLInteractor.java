@@ -4,6 +4,8 @@ import entity.RecipeCollection;
 import entity.ShoppingList;
 import entity.ShoppingListFactory;
 
+import java.io.IOException;
+
 public class SLInteractor implements SLInputBoundary {
 
     final SLDataAccessInterface slDataAccessObject; //to output the shopping list file!
@@ -20,18 +22,20 @@ public class SLInteractor implements SLInputBoundary {
     }
 
     @Override
-    public void execute(SLInputData slInputData) {
-        RecipeCollection recipeCollection = slInputData.getRecipeCollection();
-        if (recipeCollection == null){
-            slPresenter.prepareFailView("Recipe Collection is empty");
-        }
+    public void execute(SLInputData slInputData) throws IOException {
+        try {
+            RecipeCollection recipeCollection = slInputData.getRecipeCollection();
+            if (recipeCollection == null) {
+                slPresenter.prepareFailView("Recipe Collection is empty");
+            } else {
+                ShoppingList shoppingList = slFactory.create(recipeCollection);
+                slDataAccessObject.save(shoppingList);
 
-        else{
-            ShoppingList shoppingList = slFactory.create(slInputData.getRecipeCollection());
-            slDataAccessObject.save(shoppingList);
-
-            SLOutputData slOutputData =  new SLOutputData(shoppingList.toString(), false);
-            slPresenter.prepareSuccessView(slOutputData);
+                SLOutputData slOutputData = new SLOutputData(shoppingList, false);
+                slPresenter.prepareSuccessView(slOutputData);
+            }
+        } catch (IOException e){
+            slPresenter.prepareFailView("Invalid Recipe Collection");
         }
     }
 }

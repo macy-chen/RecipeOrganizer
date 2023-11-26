@@ -13,6 +13,10 @@ public class SLPresenter implements SLOutputBoundary {
         this.slViewModel = slViewModel;
     }
 
+    public SLPresenter() {
+
+    }
+
     @Override
     public void prepareFailView(String error) {
         SLState slState = slViewModel.getState();
@@ -22,14 +26,17 @@ public class SLPresenter implements SLOutputBoundary {
 
     @Override
     public void prepareSuccessView(SLOutputData response) {
-        //TODO: continue working on view & see how to get the pop-up working
 
         SLState slState = slViewModel.getState();
-        slState.setShoppingList(response.getShoppingListString());
+        slState.setShoppingList(response.getShoppingList());
         this.slViewModel.setState(slState);
         slViewModel.firePropertyChanged();
 
         viewManagerModel.setActiveView(slViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
+    }
+
+    public SLViewModel getSlViewModel() {
+        return slViewModel;
     }
 }

@@ -26,4 +26,11 @@ public class Recipe {
     public ArrayList<Ingredient> getIngredients() {
         return ingredients;
     }
+
+    public Recipe(){
+    }
+
+    public void setIngredients(ArrayList<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
 }

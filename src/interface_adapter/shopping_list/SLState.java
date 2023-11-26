@@ -1,23 +1,29 @@
 package interface_adapter.shopping_list;
 
+import entity.RecipeCollection;
+import entity.ShoppingList;
+
 public class SLState {
-    private String shoppingList = "";
+    private ShoppingList shoppingList;
     private String shoppingListError = null;
+
+    private RecipeCollection recipeCollection;
 
 
     public SLState(SLState copy){
         shoppingList = copy.shoppingList;
         shoppingListError = copy.shoppingListError;
+        recipeCollection = copy.recipeCollection;
     }
 
     public SLState(){
     }
 
-    public String getShoppingList() {
+    public ShoppingList getShoppingList() {
         return shoppingList;
     }
 
-    public void setShoppingList(String shoppingList) {
+    public void setShoppingList(ShoppingList shoppingList) {
         this.shoppingList = shoppingList;
     }
 
@@ -27,6 +33,14 @@ public class SLState {
 
     public void setShoppingListError(String shoppingListError) {
         this.shoppingListError = shoppingListError;
+    }
+
+    public RecipeCollection getRecipeCollection() {
+        return recipeCollection;
+    }
+
+    public void setRecipeCollection(RecipeCollection recipeCollection) {
+        this.recipeCollection = recipeCollection;
     }
 
     @Override

@@ -6,7 +6,7 @@ public class ShoppingList {
     private ArrayList<Ingredient> ingredients;
 
     public ShoppingList(){
-
+        ingredients = new ArrayList<Ingredient>();
     }
 
     public ShoppingList(ArrayList<Ingredient> ingredients) {
@@ -18,22 +18,34 @@ public class ShoppingList {
     }
 
     //add try catch for if ingredients is empty
-    public void addIngredient(Ingredient ingredient){
-        for(int i=0; i < ingredients.size(); i++){ //checks overlap in existing ingredients (overlap in name & measurement unit) --> add the quantities under one Ingredient object
-            if (ingredient.getName().equalsIgnoreCase(ingredients.get(i).getName()) && ingredient.getMeasurement().equalsIgnoreCase(ingredients.get(i).getMeasurement()) ){
-                ingredients.get(i).setAmount(ingredients.get(i).getAmount() + ingredient.getAmount());
+    public void addIngredient(Ingredient newIngredient){
+        //check overlap in existing ingredients (overlap in name & measurement unit) --> add the quantities under one Ingredient object
+        for (Ingredient existingIngredient : ingredients) {
+            if (newIngredient.getName().equalsIgnoreCase(existingIngredient.getName()) && newIngredient.getMeasurement().equalsIgnoreCase(existingIngredient.getMeasurement())) {
+                existingIngredient.setAmount(existingIngredient.getAmount() + newIngredient.getAmount());
+                return;
             }
-            else{ //ingredient not in arrayList OR different units --> just add as new element in arraylist
-                ingredients.add(ingredient);
-            }
+            //else{
+                //ingredients.add(newIngredient);
+            //}
+
         }
+        //ingredient not in arrayList OR different units --> just add as new element in arraylist
+        ingredients.add(newIngredient);
     }
 
-    public String toString(){
-        String s = null;
+    public String ingredientstoString(){
+        String s = "";
+        String header = String.format("%-20s %-15s %s", "Ingredient", "Amount", "Unit");
+        s = s.concat(header + "\n");
+        s = s.concat("---------------------------------------------" + "\n");
+
         for (Ingredient i: ingredients){
-            s.concat(i.toString());
+            s = s.concat(i.toString());
         }
+        s = s.replace("[", "");
+        s = s.replace("]", "");
+        s = s.replace(",", ""); //make sure no "," in API return values...
         return s;
     }
 

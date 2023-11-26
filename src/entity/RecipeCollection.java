@@ -10,7 +10,7 @@ public class RecipeCollection {
     }
 
     public RecipeCollection() {
-
+        recipes = new ArrayList<Recipe>();
     }
 
     public void addRecipe(Recipe recipe) {

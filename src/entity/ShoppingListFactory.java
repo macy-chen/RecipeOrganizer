@@ -3,17 +3,18 @@ package entity;
 import java.util.ArrayList;
 
 public class ShoppingListFactory {
-    private ShoppingList shoppingList;
+    //private ShoppingList shoppingList = new ShoppingList();
 
     public ShoppingListFactory() {
 
     }
 
     public ShoppingList create(RecipeCollection recipeCollection){
+        ShoppingList shoppingList = new ShoppingList();
         ArrayList<Recipe> recipes = recipeCollection.getRecipes();
         for (Recipe recipe : recipes) { //goes through each recipe in collection
-            for (int i = 0; i < recipe.getIngredients().size(); i++) {
-                shoppingList.addIngredient(recipe.getIngredients().get(i));
+            for (Ingredient i: recipe.getIngredients()){
+                shoppingList.addIngredient(i);
             }
         }
         return shoppingList;

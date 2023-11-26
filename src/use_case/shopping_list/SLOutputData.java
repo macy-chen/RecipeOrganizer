@@ -1,16 +1,19 @@
 package use_case.shopping_list;
 
+import entity.ShoppingList;
+
 public class  SLOutputData {
-    private final String shoppingListString;
+    private final ShoppingList shoppingList;
 
     private boolean useCaseFailed;
 
-    public SLOutputData(String sl, boolean useCaseFailed) {
-        this.shoppingListString = sl;
+    public SLOutputData(ShoppingList shoppingList, boolean useCaseFailed) {
+        this.shoppingList = shoppingList;
         this.useCaseFailed = useCaseFailed;
     }
 
-    public String getShoppingListString() {
-        return shoppingListString;
+
+    public ShoppingList getShoppingList() {
+        return shoppingList;
     }
 }
