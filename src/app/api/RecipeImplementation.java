@@ -48,6 +48,9 @@ public class RecipeImplementation implements recipeAPI {
             if (response.code() == 200) {
                 JSONArray hits = responseBody.getJSONArray("hits");
                 ArrayList<Recipe> recipes = new ArrayList<Recipe>();
+                if (hits.isEmpty()) {
+                    return recipes;
+                }
                 for (int i = 0; i < 5; i++) {
                     JSONObject curr = hits.getJSONObject(i);
                     JSONObject currRecipe = curr.getJSONObject("recipe");
@@ -95,7 +98,7 @@ public class RecipeImplementation implements recipeAPI {
             }
             String category = currIngredient.getString("foodCategory"); // might use?
             IngredientImplementation ingCaloriesNutrients = new IngredientImplementation();
-            Float calories = ingCaloriesNutrients.getIngredientCalories(currIngredient.getString("text")); // might use?
+            //Float calories = ingCaloriesNutrients.getIngredientCalories(currIngredient.getString("text")); // might use?
             newIngredient = new Ingredient(name, amount, measurement);
             ingredients.add(newIngredient);
         }
