@@ -11,6 +11,8 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 import entity.Recipe;
+import entity.Ingredient;
+import app.api.IngredientImplementation;
 
 public class RecipeImplementation implements recipeAPI {
 
@@ -50,13 +52,9 @@ public class RecipeImplementation implements recipeAPI {
                     JSONObject curr = hits.getJSONObject(i);
                     JSONObject currRecipe = curr.getJSONObject("recipe");
                     String name = currRecipe.getString("label");
-                    JSONArray ingredients = currRecipe.getJSONArray("ingredientLines"); // remove later
-                    // JSONArray ingredientArray = currRecipe.getJSONArray("ingredients");
-                    // ArrayList<Ingredient> ingredients = ingredientHelper(ingredientArray);
+                    JSONArray ingredientArray = currRecipe.getJSONArray("ingredients");
+                    ArrayList<Ingredient> recipeIngredients = ingredientHelper(ingredientArray);
                     String url = currRecipe.getString("url");
-                    ArrayList<String> recipeIngredients = new ArrayList<>(); // remove later
-                    for (int j = 0; j < ingredients.length(); j++) // remove later
-                        recipeIngredients.add(ingredients.getString(j));
                     Float calories = currRecipe.getFloat("calories");
                     JSONArray cuisine = currRecipe.getJSONArray("cuisineType");
                     ArrayList<String> recipeCulture = new ArrayList<>();
@@ -84,20 +82,25 @@ public class RecipeImplementation implements recipeAPI {
         }
     }
 
-/*    private ArrayList<Ingredient> ingredientHelper(JSONArray ingredientsArray) {
+    private ArrayList<Ingredient> ingredientHelper(JSONArray ingredientsArray) {
         ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
         for (int j = 0; j < ingredientsArray.length(); j++) {
             JSONObject currIngredient = ingredientsArray.getJSONObject(j);
             Ingredient newIngredient;
             String name = currIngredient.getString("food");
             Float amount = currIngredient.getFloat("quantity");
-            String measurement = currIngredient.getString("measure");
-            String category = currIngredient.getString("foodCategory");
-            newIngredient = new Ingredient(name, amount, category, measurement);
+            String measurement = null; // the measurement of some things like salt/pepper is null
+            if (!(amount == 0)) { // amount of salt, pepper, etc. is 0, so use if statement to avoid trying to use getString() null
+                measurement = currIngredient.getString("measure");
+            }
+            String category = currIngredient.getString("foodCategory"); // might use?
+            IngredientImplementation ingCaloriesNutrients = new IngredientImplementation();
+            Float calories = ingCaloriesNutrients.getIngredientCalories(currIngredient.getString("text")); // might use?
+            newIngredient = new Ingredient(name, amount, measurement);
             ingredients.add(newIngredient);
         }
         return ingredients;
-    }*/
+    }
 
 /*    private ArrayList<Nutrient> nutrientHelper(JSONObject nutrientsObject) {
         ArrayList<Nutrient> nutrients = new ArrayList<Nutrient>();
@@ -114,11 +117,6 @@ public class RecipeImplementation implements recipeAPI {
         return nutrients;
     }*/
 
-    @Override
-    public Recipe selectRecipe() {
-
-        return null;
-    }
 
     public static void main(String[] args) {
         RecipeImplementation imp = new RecipeImplementation();

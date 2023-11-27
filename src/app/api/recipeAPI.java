@@ -8,5 +8,4 @@ public interface recipeAPI {
 
     ArrayList<Recipe> getResults(String keyword) throws JSONException;
 
-    Recipe selectRecipe();
 }
