@@ -60,9 +60,7 @@ public class RecipeImplementation implements recipeAPI {
                     String url = currRecipe.getString("url");
                     Float calories = currRecipe.getFloat("calories");
                     JSONArray cuisine = currRecipe.getJSONArray("cuisineType");
-                    ArrayList<String> recipeCulture = new ArrayList<>();
-                    for (int k = 0; k < cuisine.length(); k++)
-                        recipeCulture.add(cuisine.getString(k));
+                    String culture = cuisine.getString(0);
                     ArrayList<String> recipeNutrients = new ArrayList<>(); // remove later
                     JSONObject nutrients = currRecipe.getJSONObject("totalNutrients"); //remove later
                     // JSONObject nutrientObject = currRecipe.getJSONObject("totalNutrients");
@@ -72,7 +70,7 @@ public class RecipeImplementation implements recipeAPI {
                         recipeNutrients.add(nutrients.getJSONObject(key).getString("label"));
                     }
                     Integer portion = currRecipe.getInt("yield");
-                    Recipe recipe = new Recipe(name, recipeIngredients, recipeNutrients, calories, recipeCulture, portion, url); // change later
+                    Recipe recipe = new Recipe(name, recipeIngredients, recipeNutrients, calories, culture, portion, url); // change later
                     recipes.add(recipe);
                 }
 
