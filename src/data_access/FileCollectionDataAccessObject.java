@@ -20,24 +20,7 @@ public class FileCollectionDataAccessObject implements AddCollectionCollectionDa
         headers.put("culture", 1);
         headers.put("calories", 2);
 
-        if (csvFile.length() == 0) {
-            save();
-        } else {
-            try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
-                String header = reader.readLine();
-
-                // For later: clean this up by creating a new Exception subclass and handling it in the UI.
-                assert header.equals("name");
-
-                String row;
-                while ((row = reader.readLine()) != null) {
-                    String[] col = row.split(",");
-                    String name = String.valueOf(col[headers.get("name")]);
-                    String culture = String.valueOf(col[headers.get("culture")]);
-                    String calories = String.valueOf(col[headers.get("calories")]);
-                }
-            }
-        }
+        save();
     }
 
     @Override
