@@ -71,7 +71,7 @@ public class RecipeImplementation implements recipeAPI {
                         recipeNutrients.add(nutrients.getJSONObject(key).getString("label"));
                     }
                     Integer portion = currRecipe.getInt("yield");
-                    Recipe recipe = new Recipe(name, /*recipeIngredients,*/ recipeNutrients, calories, recipeCulture, portion, url); // change later
+                    Recipe recipe = new Recipe(name, recipeIngredients, recipeNutrients, calories, recipeCulture, portion, url); // change later
                     recipes.add(recipe);
                 }
 
