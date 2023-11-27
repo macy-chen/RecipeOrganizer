@@ -4,6 +4,7 @@ import interface_adapter.SearchController;
 import interface_adapter.SearchPresenter;
 import interface_adapter.SearchState;
 import interface_adapter.SearchViewModel;
+import interface_adapter.add_to_collection.AddCollectionState;
 
 import javax.swing.*;
 import java.awt.*;
@@ -98,6 +99,9 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        SearchState state = (SearchState) evt.getNewValue();
+        if (state.getSearchError() != null) {
+            JOptionPane.showMessageDialog(this, state.getSearchError());
+        }
     }
 }
