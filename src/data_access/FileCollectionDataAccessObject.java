@@ -1,13 +1,19 @@
 package data_access;
 
 import entity.Recipe;
+import use_case.ShowCollectionCollectionDataAccessInterface;
 import use_case.add_to_collection.AddCollectionCollectionDataAccessInterface;
 
 import java.io.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
-public class FileCollectionDataAccessObject implements AddCollectionCollectionDataAccessInterface {
+import java.io.BufferedReader;
+import java.io.FileReader;
+
+import static java.util.Collections.emptyList;
+
+public class FileCollectionDataAccessObject implements AddCollectionCollectionDataAccessInterface, ShowCollectionCollectionDataAccessInterface {
     private final File csvFile;
 
     private final Map<String, Integer> headers = new LinkedHashMap<>();
@@ -68,6 +74,28 @@ public class FileCollectionDataAccessObject implements AddCollectionCollectionDa
         }
     }
 
+    public List<Recipe> load() {
+        List<Recipe> recipeList = new ArrayList<>();
+        List<String> headers;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
+            String headersLine = reader.readLine();
+            headers = Arrays.asList(headersLine.split(","));
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] values = line.split(",");
+                recipeList.add(new Recipe(values[0], null, null, Float.parseFloat(values[2]), values[1], 0, ""));
+            }
+
+            reader.close();
+
+            return recipeList;
+
+        } catch (IOException e) {
+            throw new RuntimeException("Error reading the CSV file", e);
+        }
+    }
     @Override
     public List<Recipe> getAll() {
         List<Recipe> recipeslist = new ArrayList<Recipe>();
