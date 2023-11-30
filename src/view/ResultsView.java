@@ -1,6 +1,9 @@
 package view;
 
 import entity.Recipe;
+import interface_adapter.SearchState;
+import interface_adapter.SearchViewModel;
+import interface_adapter.ViewManagerModel;
 import interface_adapter.add_to_collection.AddCollectionController;
 import interface_adapter.add_to_collection.AddCollectionState;
 import interface_adapter.add_to_collection.AddCollectionViewModel;
@@ -9,6 +12,7 @@ import java.beans.PropertyChangeEvent;
 import java.util.*;
 import java.util.List;
 import javax.swing.*;
+import javax.swing.text.html.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +25,7 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
     private final AddCollectionViewModel addCollectionViewModel;
     private final AddCollectionController addCollectionController;
     final JButton addCollection;
+    final JButton back;
     final List<JCheckBox> selectRecipeBoxes;
     final List<Integer> selectedBoxes;
 
@@ -34,6 +39,8 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
 
         JPanel buttons = new JPanel();
         addCollection = new JButton(AddCollectionViewModel.ADDCOLLECTION_BUTTON_LABEL);
+        back = new JButton(AddCollectionViewModel.BACK_BUTTON_LABEL);
+        buttons.add(back);
         buttons.add(addCollection);
 
         int numResults = 5;
@@ -47,6 +54,21 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
             selectRecipeBoxes.add(box);
             checkBoxes.add(box);
         }
+
+        back.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(back)) {
+                            setVisible(false);
+                            ViewManagerModel viewManagerModel = new ViewManagerModel();
+                            SearchViewModel searchViewModel = new SearchViewModel();
+                            viewManagerModel.setActiveView(searchViewModel.getViewName());
+                            viewManagerModel.firePropertyChanged();
+                        }
+                    }
+                }
+        );
 
         addCollection.addActionListener(
                 new ActionListener() {
@@ -98,7 +120,9 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
     public void setFields(AddCollectionState state) {
         List<Recipe> recipeResults = state.getRecipeResults();
         for (int i = 0; i < recipeResults.size(); i++) {
-            selectRecipeBoxes.get(i).setText(recipeResults.get(i).getName());
+            String text = "<html>" + recipeResults.get(i).getName() + "<br>" +
+                    "Calories: " + recipeResults.get(i).getCalories() +"<html>";
+            selectRecipeBoxes.get(i).setText(text);
         }
     }
 }
