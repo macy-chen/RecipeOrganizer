@@ -61,7 +61,7 @@ public class Ingredient {
     }
 
     public String toString(){ //formats each ingredient as a new line
-        String s = String.format("%-20s %-15s %s", this.name, amount.toString(), measurement);
+        String s = String.format("%-25s %.2f %8s", this.name, amount, measurement);
         return (s + "\n");
     }
 }

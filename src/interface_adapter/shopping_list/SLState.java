@@ -43,11 +43,11 @@ public class SLState {
         this.recipeCollection = recipeCollection;
     }
 
-    @Override
-    public String toString() {
-        return "SLState{" +
-                "shoppingList='" + shoppingList + '\'' +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "SLState{" +
+//                "shoppingList='" + shoppingList + '\'' +
+//                '}';
+//    }
 }
 

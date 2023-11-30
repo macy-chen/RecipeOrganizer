@@ -25,7 +25,7 @@ public class SLInteractor implements SLInputBoundary {
     public void execute(SLInputData slInputData) throws IOException {
         try {
             RecipeCollection recipeCollection = slInputData.getRecipeCollection();
-            if (recipeCollection == null) {
+            if (recipeCollection.getRecipes().isEmpty()) {
                 slPresenter.prepareFailView("Recipe Collection is empty");
             } else {
                 ShoppingList shoppingList = slFactory.create(recipeCollection);

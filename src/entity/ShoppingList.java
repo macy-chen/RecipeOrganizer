@@ -36,7 +36,7 @@ public class ShoppingList {
 
     public String ingredientstoString(){
         String s = "";
-        String header = String.format("%-20s %-15s %s", "Ingredient", "Amount", "Unit");
+        String header = String.format("%-15s %-15s %s", "Ingredient", "Amount", "Unit");
         s = s.concat(header + "\n");
         s = s.concat("---------------------------------------------" + "\n");
 

@@ -30,7 +30,7 @@ public class ShoppingListView extends JPanel implements ActionListener, Property
 
     private final JButton generateSL;
 
-    public ShoppingListView(SLViewModel slViewModel, SLController slController) { //TODO: ViewController & ViewViewModel
+    public ShoppingListView(SLViewModel slViewModel, SLController slController) { //TODO: take from addtoCollectionState
         this.slViewModel = slViewModel;
         this.slController = slController;
 
@@ -52,7 +52,7 @@ public class ShoppingListView extends JPanel implements ActionListener, Property
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource().equals(generateSL)) { //when clicked
-                            SLState currentState = slViewModel.getState(); //TODO: take from viewCollectionState?
+                            SLState currentState = slViewModel.getState(); //TODO: take from addToCollectionState?
                             RecipeCollection c = currentState.getRecipeCollection();
 
                             try {
@@ -62,7 +62,12 @@ public class ShoppingListView extends JPanel implements ActionListener, Property
                             }
                         }
                         SLState slState = slViewModel.getState();
-                        JOptionPane.showMessageDialog(null, slState.getShoppingList().ingredientstoString());
+                        if (slState.getShoppingListError() == null){ //no error
+                            JOptionPane.showMessageDialog(null, slState.getShoppingList().ingredientstoString());
+                        }
+                        else{ //have error
+                            JOptionPane.showMessageDialog(null, slState.getShoppingListError());
+                        }
                     }
                 }
         );

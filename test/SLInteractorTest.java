@@ -5,6 +5,7 @@ import entity.RecipeCollection;
 import entity.ShoppingListFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.shopping_list.SLPresenter;
+import interface_adapter.shopping_list.SLState;
 import interface_adapter.shopping_list.SLViewModel;
 import org.junit.Test;
 import use_case.shopping_list.SLDataAccessInterface;
@@ -19,8 +20,6 @@ import static org.junit.Assert.*;
 public class SLInteractorTest {
 
     private RecipeCollection recipeCollection = new RecipeCollection();
-    boolean popUpDiscovered = false;
-
 
     public void addRecipe2Ingredients(){
         Ingredient ingredient1 = new Ingredient("Pepper", 100.0F, "g");
@@ -210,6 +209,28 @@ public class SLInteractorTest {
         assertEquals((2+6), line.count()); //2 for header + ---, 1 extra because each ingredientToString gives \n
     }
 
-    //empty SL
+    @org.junit.Test
+    public void testEmptyRecipeCollection(){ //emptySL
+        RecipeCollection recipeCollectionEmpty = new RecipeCollection();
+        SLInputData slInputData = new SLInputData(recipeCollectionEmpty);
+        SLDataAccessInterface slDAO = new ShoppingListDataAccessObject("./ShoppingList2.txt");
+        ShoppingListFactory slFactory = new ShoppingListFactory();
+        SLViewModel slViewModel = new SLViewModel();
+        ViewManagerModel viewManagerModel = new ViewManagerModel();
+        SLPresenter slPresenter = new SLPresenter(viewManagerModel, slViewModel);
+        SLInteractor interactor = new SLInteractor(slDAO, slPresenter, slFactory);
+
+        try {
+            interactor.execute(slInputData);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        SLState tempState = slPresenter.getSlViewModel().getState();
+
+        assertEquals("Recipe Collection is empty", tempState.getShoppingListError());
+    }
+
+
 
 }
