@@ -6,8 +6,10 @@ public class ShowCollectionInputData {
 
     final private String filePath;
 
-    public ShowCollectionInputData(String filePath) {
-        this.filePath = filePath;
+    public ShowCollectionInputData() {
+        this.filePath = "./recipe";
     }
+
+    public String getFilePath() {return filePath;}
 
 }

@@ -12,4 +12,5 @@ public class RecipeCollection {
     public void addRecipe(Recipe recipe) {
         recipes.add(recipe);
     }
+    public ArrayList<Recipe> getRecipes() {return this.recipes;}
 }

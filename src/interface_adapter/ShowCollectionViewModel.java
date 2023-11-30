@@ -2,33 +2,37 @@ package interface_adapter;
 
 import entity.Recipe;
 import use_case.ShowCollectionInteractor;
-import use_case.ShowCollectionOutputData;
 
 import javax.swing.*;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
-import java.util.ArrayList;
+import java.util.List;
 
 public class ShowCollectionViewModel {
     private DefaultListModel<String> listModel;
+    private ShowCollectionInteractor showCollectionInteractor;
 
     public ShowCollectionViewModel() {
-        // Create a DefaultListModel to store the recipe names
-        listModel = new DefaultListModel<>();
-
-        // Create some sample recipes (you can replace this with your actual data)
-        ArrayList<Recipe> recipes = ShowCollectionInteractor.execute();
-
-        // Add recipe names to the list model
-        for (Recipe recipe : recipes) {
-            listModel.addElement(recipe.getName());
-            listModel.addElement(recipe.getCulture());
-            listModel.addElement(String.valueOf(recipe.getCalories()));
-            listModel.addElement("\n");
-        }
+        this.showCollectionInteractor = showCollectionInteractor;
+        this.listModel = new DefaultListModel<>();
+        updateListModelWithRecipes();
     }
 
     public DefaultListModel<String> getListModel() {
         return listModel;
+    }
+
+    public void updateListModelWithRecipes() {
+        // Ensure showCollectionInteractor is not null
+        if (showCollectionInteractor != null) {
+            List<Recipe> recipes = showCollectionInteractor.execute();
+            for (Recipe recipe : recipes) {
+                listModel.addElement(recipe.getName());
+                listModel.addElement(recipe.getCulture());
+                listModel.addElement(String.valueOf(recipe.getCalories()));
+                listModel.addElement("\n");
+            }
+        } else {
+            // Handle the case when showCollectionInteractor is null
+            System.out.println("showCollectionInteractor is null. Unable to update list model.");
+        }
     }
 }

@@ -2,6 +2,7 @@ package data_access;
 
 import entity.Recipe;
 import use_case.ShowCollectionCollectionDataAccessInterface;
+import use_case.ShowCollectionInputData;
 import use_case.add_to_collection.AddCollectionCollectionDataAccessInterface;
 
 import java.io.*;
@@ -74,11 +75,11 @@ public class FileCollectionDataAccessObject implements AddCollectionCollectionDa
         }
     }
 
-    public List<Recipe> load() {
+    public List<Recipe> load(ShowCollectionInputData showCollectionInputData) {
         List<Recipe> recipeList = new ArrayList<>();
         List<String> headers;
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(showCollectionInputData.getFilePath()))) {
             String headersLine = reader.readLine();
             headers = Arrays.asList(headersLine.split(","));
 
@@ -96,6 +97,7 @@ public class FileCollectionDataAccessObject implements AddCollectionCollectionDa
             throw new RuntimeException("Error reading the CSV file", e);
         }
     }
+
     @Override
     public List<Recipe> getAll() {
         List<Recipe> recipeslist = new ArrayList<Recipe>();

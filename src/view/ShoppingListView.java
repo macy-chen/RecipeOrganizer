@@ -62,7 +62,7 @@ public class ShoppingListView extends JPanel implements ActionListener, Property
                             }
                         }
                         SLState slState = slViewModel.getState();
-                        JOptionPane.showMessageDialog(null, slState.getShoppingList().ingredientstoString());
+                        //JOptionPane.showMessageDialog(null, slState.getShoppingList().ingredientstoString());
                     }
                 }
         );

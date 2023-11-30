@@ -31,7 +31,7 @@ public class ShoppingListDataAccessObject implements SLDataAccessInterface {
 //            writer.write("---------------------------------------------");
 //            writer.newLine();
 
-            writer.write(shoppingList.ingredientstoString());
+            //writer.write(shoppingList.ingredientstoString());
 
             writer.close();
 

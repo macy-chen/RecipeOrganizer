@@ -15,11 +15,11 @@ public class SearchUseCaseFactory {
     private SearchUseCaseFactory() {}
 
     public static SearchView create(
-            ViewManagerModel viewManagerModel, SearchViewModel searchViewModel, AddCollectionViewModel addCollectionViewModel) {
+            ViewManagerModel viewManagerModel, SearchViewModel searchViewModel, AddCollectionViewModel addCollectionViewModel, ShowCollectionViewModel showCollectionViewModel) {
 
         try {
             SearchController searchController = createSearchUseCase(viewManagerModel, searchViewModel, addCollectionViewModel);
-            return new SearchView(searchController, searchViewModel);
+            return new SearchView(searchController, searchViewModel, showCollectionViewModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Failed.");
         }
