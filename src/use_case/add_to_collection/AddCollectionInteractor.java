@@ -22,15 +22,17 @@ public class AddCollectionInteractor implements AddCollectionInputBoundary {
         for (int num : addCollectionInputData.getSelectedBoxes()) {
             selectedRecipes.add(addCollectionInputData.getRecipeResults().get(num));
         }
-        for (Recipe recipe : selectedRecipes) {
-            if (collectionDataAccessObject.existsByName(recipe.getName())) {
-                addCollectionPresenter.prepareFailView("Recipe already exists in collection.");
+        for (int i = 0; i < selectedRecipes.size(); i++) {
+            if (collectionDataAccessObject.existsByName(selectedRecipes.get(i).getName())) {
+                String failMessage = String.format("%s already exists in collection.", selectedRecipes.get(i).getName());
+                addCollectionPresenter.prepareFailView(failMessage);
             } else {
-                collectionDataAccessObject.save(recipe);
+                collectionDataAccessObject.save(selectedRecipes.get(i));
                 List<Recipe> collection = collectionDataAccessObject.getAll();
-                AddCollectionOutputData addCollectionOutputData = new AddCollectionOutputData(recipe.getName(), collection, false);
+                AddCollectionOutputData addCollectionOutputData = new AddCollectionOutputData(collection, false);
                 addCollectionPresenter.prepareSuccessView(addCollectionOutputData);
             }
+            selectedRecipes.remove(selectedRecipes.get(i));
         }
     }
 }

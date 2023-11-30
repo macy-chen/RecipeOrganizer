@@ -36,14 +36,14 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
         addCollection = new JButton(AddCollectionViewModel.ADDCOLLECTION_BUTTON_LABEL);
         buttons.add(addCollection);
 
-        int numResults = 1;
+        int numResults = 5;
         JPanel checkBoxes = new JPanel();
         checkBoxes.setLayout(new BoxLayout(checkBoxes, BoxLayout.Y_AXIS));
         checkBoxes.setAlignmentX(Component.CENTER_ALIGNMENT);
         selectedBoxes = new ArrayList<>();
         selectRecipeBoxes = new ArrayList<>();
         for (int i = 0; i < numResults; i++) {
-            JCheckBox box = new JCheckBox("name");
+            JCheckBox box = new JCheckBox();
             selectRecipeBoxes.add(box);
             checkBoxes.add(box);
         }
@@ -91,6 +91,7 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
         AddCollectionState state = (AddCollectionState) evt.getNewValue();
         if (state.getAddCollectionError() != null) {
             JOptionPane.showMessageDialog(this, state.getAddCollectionError());
+        } else {
             setFields(state);
         }
     }
