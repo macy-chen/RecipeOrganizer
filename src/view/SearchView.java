@@ -1,10 +1,6 @@
 package view;
 
-import interface_adapter.SearchController;
-import interface_adapter.SearchPresenter;
-import interface_adapter.SearchState;
-import interface_adapter.SearchViewModel;
-import interface_adapter.add_to_collection.AddCollectionState;
+import interface_adapter.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,10 +21,13 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
     private final JButton search;
     private final JButton showCollection;
+    private final ShowCollectionViewModel showCollectionViewModel;
 
-    public SearchView(SearchController controller, SearchViewModel searchViewModel) {
+
+    public SearchView(SearchController controller, SearchViewModel searchViewModel, ShowCollectionViewModel showCollectionViewModel) {
         this.searchController = controller;
         this.searchViewModel = searchViewModel;
+        this.showCollectionViewModel = showCollectionViewModel;
         searchViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel(SearchViewModel.TITLE_LABEL);
@@ -59,9 +58,9 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(showCollection)) {
-                            SearchState currentState = searchViewModel.getState();
+                            showCollectionViewModel.updateListModelWithRecipes();
 
-                            // searchController.execute(currentState.getKeyword());
+
                         }
                     }
                 }
