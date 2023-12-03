@@ -10,24 +10,15 @@ import java.util.*;
 
 public class AddCollectionPresenter implements AddCollectionOutputBoundary {
     private final AddCollectionViewModel addCollectionViewModel;
-    //private final ShowCollectionViewModel showCollectionViewModel;
     private ViewManagerModel viewManagerModel;
 
     public AddCollectionPresenter(AddCollectionViewModel addCollectionViewModel, ViewManagerModel viewManagerModel) {
         this.addCollectionViewModel = addCollectionViewModel;
         this.viewManagerModel = viewManagerModel;
-        //this.showCollectionViewModel = showCollectionViewModel;
     }
 
     @Override
     public void prepareSuccessView(AddCollectionOutputData response) {
-//        ShowCollectionState showCollectionState = ShowCollectionViewModel.getState();
-//        showCollectionState.setCollection(response.getCollectionResults());
-//        this.showCollectionViewModel.setState(showCollectionState);
-//        showCollectionViewModel.filePropertyChanged();
-//
-//        viewManagerModel.setActiveView(showCollectionViewModel.getViewName());
-//        viewManagerModel.filePropertyChanged();
         System.out.println(response.getCollectionResults());
     }
 

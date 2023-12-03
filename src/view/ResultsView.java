@@ -1,5 +1,6 @@
 package view;
 
+import app.Main;
 import entity.Recipe;
 import interface_adapter.SearchState;
 import interface_adapter.SearchViewModel;
@@ -9,6 +10,7 @@ import interface_adapter.add_to_collection.AddCollectionState;
 import interface_adapter.add_to_collection.AddCollectionViewModel;
 
 import java.beans.PropertyChangeEvent;
+import java.io.IOException;
 import java.util.*;
 import java.util.List;
 import javax.swing.*;
@@ -26,8 +28,9 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
     private final AddCollectionController addCollectionController;
     final JButton addCollection;
     final JButton back;
-    final List<JCheckBox> selectRecipeBoxes;
-    final List<Integer> selectedBoxes;
+    final List<JRadioButton> selectRecipeBoxes;
+    private int selectedBox;
+
 
     public ResultsView(AddCollectionViewModel addCollectionViewModel, AddCollectionController addCollectionController) {
         this.addCollectionController = addCollectionController;
@@ -45,26 +48,36 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
 
         int numResults = 5;
         JPanel checkBoxes = new JPanel();
+        ButtonGroup buttonGroup = new ButtonGroup();
         checkBoxes.setLayout(new BoxLayout(checkBoxes, BoxLayout.Y_AXIS));
         checkBoxes.setAlignmentX(Component.CENTER_ALIGNMENT);
-        selectedBoxes = new ArrayList<>();
         selectRecipeBoxes = new ArrayList<>();
         for (int i = 0; i < numResults; i++) {
-            JCheckBox box = new JCheckBox();
-            selectRecipeBoxes.add(box);
+            JRadioButton box = new JRadioButton();
+            buttonGroup.add(box);
             checkBoxes.add(box);
+            selectRecipeBoxes.add(box);
         }
 
         back.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent evt) {
+                        JFrame app = null;
+                        Window[] windows = Window.getWindows();
+                        for (Window window : windows) {
+                            if (window instanceof JFrame) {
+                                app = (JFrame) window;
+                            }
+                        }
                         if (evt.getSource().equals(back)) {
-                            setVisible(false);
-                            ViewManagerModel viewManagerModel = new ViewManagerModel();
-                            SearchViewModel searchViewModel = new SearchViewModel();
-                            viewManagerModel.setActiveView(searchViewModel.getViewName());
-                            viewManagerModel.firePropertyChanged();
+                            try {
+                                app.dispose();
+                                Main.main(null);
+                                System.out.println();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
                         }
                     }
                 }
@@ -75,30 +88,21 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
                     @Override
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(addCollection)) {
+                            for (JRadioButton box : selectRecipeBoxes) {
+                                if (box.isSelected()) {
+                                    selectedBox = selectRecipeBoxes.indexOf(box);
+                                    System.out.println(selectedBox);
+                                }
+                            }
                             AddCollectionState currentState = addCollectionViewModel.getState();
                             addCollectionController.execute(
-                                    selectedBoxes, currentState.getRecipeResults()
+                                    selectedBox, currentState.getRecipeResults()
                             );
                         }
                     }
                 }
         );
 
-        for (JCheckBox box:selectRecipeBoxes) {
-            box.addItemListener(
-                    new ItemListener() {
-                        @Override
-                        public void itemStateChanged(ItemEvent e) {
-                            if (e.getStateChange() == ItemEvent.SELECTED) {
-                                selectedBoxes.add(selectRecipeBoxes.indexOf(box));
-                            }
-                            else if (e.getStateChange() == ItemEvent.DESELECTED) {
-                                selectedBoxes.remove(Integer.valueOf(selectRecipeBoxes.indexOf(box)));
-                            }
-                            System.out.println(selectedBoxes);
-                        }
-                    });
-        }
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
         this.add(checkBoxes);
