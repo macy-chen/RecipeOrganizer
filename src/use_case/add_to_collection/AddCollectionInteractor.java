@@ -7,32 +7,29 @@ import java.util.List;
 public class AddCollectionInteractor implements AddCollectionInputBoundary {
     final AddCollectionCollectionDataAccessInterface collectionDataAccessObject;
     final AddCollectionOutputBoundary addCollectionPresenter;
-    final private List<Recipe> selectedRecipes;
+    private Recipe selectedRecipe;
 
     public AddCollectionInteractor(AddCollectionCollectionDataAccessInterface collectionDataAccessObject,
                                    AddCollectionOutputBoundary addCollectionPresenter) {
         this.collectionDataAccessObject = collectionDataAccessObject;
         this.addCollectionPresenter = addCollectionPresenter;
 
-        selectedRecipes = new ArrayList<>();
+        selectedRecipe = new Recipe();
     }
 
     @Override
     public void execute(AddCollectionInputData addCollectionInputData) {
-        for (int num : addCollectionInputData.getSelectedBoxes()) {
-            selectedRecipes.add(addCollectionInputData.getRecipeResults().get(num));
-        }
-        for (int i = 0; i < selectedRecipes.size(); i++) {
-            if (collectionDataAccessObject.existsByName(selectedRecipes.get(i).getName())) {
-                String failMessage = String.format("%s already exists in collection.", selectedRecipes.get(i).getName());
-                addCollectionPresenter.prepareFailView(failMessage);
-            } else {
-                collectionDataAccessObject.save(selectedRecipes.get(i));
-                List<Recipe> collection = collectionDataAccessObject.getAll();
-                AddCollectionOutputData addCollectionOutputData = new AddCollectionOutputData(collection, false);
-                addCollectionPresenter.prepareSuccessView(addCollectionOutputData);
-            }
-            selectedRecipes.remove(selectedRecipes.get(i));
+        int selectedBox = addCollectionInputData.getSelectedBox();
+        selectedRecipe = addCollectionInputData.getRecipeResults().get(selectedBox);
+
+        if (collectionDataAccessObject.existsByName(selectedRecipe.getName())) {
+            String failMessage = String.format("%s already exists in collection.", selectedRecipe.getName());
+            addCollectionPresenter.prepareFailView(failMessage);
+        } else {
+            collectionDataAccessObject.save(selectedRecipe);
+            List<Recipe> collection = collectionDataAccessObject.getAll();
+            AddCollectionOutputData addCollectionOutputData = new AddCollectionOutputData(collection, false);
+            addCollectionPresenter.prepareSuccessView(addCollectionOutputData);
         }
     }
 }
