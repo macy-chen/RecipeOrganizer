@@ -5,10 +5,14 @@ import interface_adapter.add_to_collection.AddCollectionViewModel;
 import interface_adapter.search.SearchController;
 import interface_adapter.search.SearchPresenter;
 import interface_adapter.search.SearchViewModel;
-import use_case.*;
+import interface_adapter.show_collection.ShowCollectionController;
+import interface_adapter.show_collection.ShowCollectionPresenter;
+import interface_adapter.show_collection.ShowCollectionViewModel;
 import use_case.search.SearchInputBoundary;
 import use_case.search.SearchInteractor;
 import use_case.search.SearchOutputBoundary;
+import use_case.show_collection.ShowCollectionInteractor;
+import use_case.show_collection.ShowCollectionOutputBoundary;
 import view.SearchView;
 
 import javax.swing.*;

@@ -1,5 +1,6 @@
-package use_case;
+package use_case.show_collection;
 import entity.Recipe;
+
 import java.util.List;
 
 

@@ -1,7 +1,8 @@
-package interface_adapter;
+package interface_adapter.show_collection;
 
-import use_case.ShowCollectionOutputBoundary;
-import use_case.ShowCollectionOutputData;
+import interface_adapter.ViewManagerModel;
+import use_case.show_collection.ShowCollectionOutputBoundary;
+import use_case.show_collection.ShowCollectionOutputData;
 
 public class ShowCollectionPresenter implements ShowCollectionOutputBoundary {
     private final ShowCollectionViewModel showCollectionViewModel;

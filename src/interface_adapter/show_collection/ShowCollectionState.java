@@ -1,7 +1,6 @@
-package interface_adapter;
+package interface_adapter.show_collection;
 
 import entity.Recipe;
-import entity.RecipeCollection;
 
 import java.util.List;
 

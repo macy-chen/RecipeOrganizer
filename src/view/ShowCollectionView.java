@@ -1,12 +1,11 @@
 package view;
 
 import entity.Recipe;
-import interface_adapter.ShowCollectionController;
-import interface_adapter.ShowCollectionViewModel;
+import interface_adapter.show_collection.ShowCollectionController;
+import interface_adapter.show_collection.ShowCollectionViewModel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ShowCollectionView extends JFrame {

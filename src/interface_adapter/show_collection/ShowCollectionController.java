@@ -1,8 +1,7 @@
-package interface_adapter;
+package interface_adapter.show_collection;
 
 import entity.Recipe;
-import use_case.ShowCollectionInputBoundary;
-import use_case.ShowCollectionInteractor;
+import use_case.show_collection.ShowCollectionInteractor;
 
 import java.util.List;
 

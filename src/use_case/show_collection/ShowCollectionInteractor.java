@@ -1,9 +1,8 @@
-package use_case;
+package use_case.show_collection;
 
 import data_access.FileCollectionDataAccessObject;
 import entity.Recipe;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
