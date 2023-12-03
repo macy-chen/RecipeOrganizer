@@ -53,7 +53,7 @@ public class ShowCollectionView extends JFrame {
         panel.add(scrollPane, BorderLayout.CENTER);
 
         // Set the default close operation and size of the frame
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(400, 300);
 
         // Add the panel to the frame
