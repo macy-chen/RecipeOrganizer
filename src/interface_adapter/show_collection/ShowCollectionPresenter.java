@@ -16,7 +16,6 @@ public class ShowCollectionPresenter implements ShowCollectionOutputBoundary {
 
     @Override
     public void prepareSuccessView(ShowCollectionOutputData showCollectionOutputData) {
-        System.out.println("Show Collection Presenter prepareSuccessView called");
         System.out.println(showCollectionOutputData);
     }
 
