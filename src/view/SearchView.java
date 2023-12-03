@@ -1,8 +1,15 @@
 package view;
 
+import entity.Recipe;
+import entity.RecipeCollection;
+import interface_adapter.add_to_collection.AddCollectionState;
+import interface_adapter.add_to_collection.AddCollectionViewModel;
 import interface_adapter.search.SearchController;
 import interface_adapter.search.SearchState;
 import interface_adapter.search.SearchViewModel;
+import interface_adapter.shopping_list.SLController;
+import interface_adapter.shopping_list.SLState;
+import interface_adapter.shopping_list.SLViewModel;
 import interface_adapter.show_collection.ShowCollectionController;
 import interface_adapter.show_collection.ShowCollectionViewModel;
 
@@ -14,6 +21,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SearchView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -28,14 +38,23 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private final ShowCollectionViewModel showCollectionViewModel;
     private final ShowCollectionController showCollectionController;
 
+    private final JButton generateShoppingList;
+
+    private final SLViewModel slViewModel;
+    private final SLController slController;
+
 
     public SearchView(SearchController controller, SearchViewModel searchViewModel,
-                      ShowCollectionController showCollectionController, ShowCollectionViewModel showCollectionViewModel) {
+                      ShowCollectionController showCollectionController, ShowCollectionViewModel showCollectionViewModel,
+                      SLController slController, SLViewModel slViewModel, AddCollectionViewModel addCollectionViewModel) {
         this.searchController = controller;
         this.searchViewModel = searchViewModel;
         this.showCollectionViewModel = showCollectionViewModel;
         this.showCollectionController = showCollectionController;
         searchViewModel.addPropertyChangeListener(this);
+
+        this.slController = slController;
+        this.slViewModel = slViewModel;
 
         JLabel title = new JLabel(SearchViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -45,8 +64,10 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         JPanel buttons = new JPanel();
         search = new JButton(SearchViewModel.SEARCH_BUTTON_LABEL);
         showCollection = new JButton(SearchViewModel.SHOW_COLLECTION_BUTTON_LABEL);
+        generateShoppingList = new JButton(SLViewModel.GENERATE_SL_BUTTON_LABEL);
         buttons.add(search);
         buttons.add(showCollection);
+        buttons.add(generateShoppingList);
 
         search.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
@@ -74,6 +95,48 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                     }
                 }
         );
+
+        generateShoppingList.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (e.getSource().equals(generateShoppingList)) { //when clicked
+
+
+                            //SLState currentState = slViewModel.getState();
+                            AddCollectionState currentState = addCollectionViewModel.getState(); //only works from recently added collection?
+                            List<Recipe> recipes = currentState.getRecipeResults();
+
+
+                            //
+
+//                            RecipeCollection c;
+//                            if (recipes.isEmpty()){
+//                                c = new RecipeCollection();
+//                            }
+//                            else {
+//                                ArrayList<Recipe> recipeArrayList = new ArrayList<>(recipes);
+//                                c = new RecipeCollection(recipeArrayList);
+//                            }
+
+                            try {
+                                slController.execute("./recipe");
+                            } catch (IOException ex) {
+                                throw new RuntimeException(ex);
+                            }
+                        }
+                        SLState slState = slViewModel.getState();
+                        if (slState.getShoppingListError() == null){ //no error
+                            JOptionPane.showMessageDialog(null, slState.getShoppingList().ingredientstoString());
+                        }
+                        else{ //have error
+                            JOptionPane.showMessageDialog(null, slState.getShoppingListError());
+                        }
+                    }
+                }
+        );
+
+
 
         keywordInputField.addKeyListener(
                 new KeyListener() {

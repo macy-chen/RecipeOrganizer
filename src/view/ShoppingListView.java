@@ -1,6 +1,9 @@
 package view;
 
+import entity.Recipe;
 import entity.RecipeCollection;
+import interface_adapter.add_to_collection.AddCollectionState;
+import interface_adapter.add_to_collection.AddCollectionViewModel;
 import interface_adapter.shopping_list.SLController;
 import interface_adapter.shopping_list.SLState;
 import interface_adapter.shopping_list.SLViewModel;
@@ -12,7 +15,8 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
-import java.util.Objects;
+import java.util.*;
+import java.util.List;
 
 public class ShoppingListView extends JPanel implements ActionListener, PropertyChangeListener {
     /**
@@ -30,7 +34,7 @@ public class ShoppingListView extends JPanel implements ActionListener, Property
 
     private final JButton generateSL;
 
-    public ShoppingListView(SLViewModel slViewModel, SLController slController) { //TODO: ViewController & ViewViewModel
+    public ShoppingListView(SLViewModel slViewModel, SLController slController, AddCollectionViewModel addCollectionViewModel) { //TODO: take from addtoCollectionState
         this.slViewModel = slViewModel;
         this.slController = slController;
 
@@ -52,17 +56,27 @@ public class ShoppingListView extends JPanel implements ActionListener, Property
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource().equals(generateSL)) { //when clicked
-                            SLState currentState = slViewModel.getState(); //TODO: take from viewCollectionState?
-                            RecipeCollection c = currentState.getRecipeCollection();
+
+                            //SLState currentState = slViewModel.getState();
+//                            AddCollectionState currentState = addCollectionViewModel.getState();
+//                            List<Recipe> recipes = currentState.getRecipeResults();
+//                            ArrayList<Recipe> recipeArrayList = new ArrayList<>(recipes);
+//
+//                            RecipeCollection c = new RecipeCollection(recipeArrayList);
 
                             try {
-                                slController.execute(c); //need recipe list -- from view collection state
+                                slController.execute("./recipe");
                             } catch (IOException ex) {
                                 throw new RuntimeException(ex);
                             }
                         }
                         SLState slState = slViewModel.getState();
-                        JOptionPane.showMessageDialog(null, slState.getShoppingList().ingredientstoString());
+                        if (slState.getShoppingListError() == null){ //no error
+                            JOptionPane.showMessageDialog(null, slState.getShoppingList().ingredientstoString());
+                        }
+                        else{ //have error
+                            JOptionPane.showMessageDialog(null, slState.getShoppingListError());
+                        }
                     }
                 }
         );

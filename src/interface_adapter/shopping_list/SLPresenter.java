@@ -1,6 +1,7 @@
 package interface_adapter.shopping_list;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.add_to_collection.AddCollectionViewModel;
 import use_case.shopping_list.SLOutputBoundary;
 import use_case.shopping_list.SLOutputData;
 
@@ -8,9 +9,12 @@ public class SLPresenter implements SLOutputBoundary {
     private ViewManagerModel viewManagerModel;
     private SLViewModel slViewModel;
 
-    public SLPresenter(ViewManagerModel viewManagerModel, SLViewModel slViewModel){ //TODO: update to work with current view model (ViewCollection?)
+    private AddCollectionViewModel addCollectionViewModel;
+
+    public SLPresenter(ViewManagerModel viewManagerModel, SLViewModel slViewModel, AddCollectionViewModel addCollectionViewModel){ //TODO: update to work with current view model (ViewCollection?)
         this.viewManagerModel = viewManagerModel;
         this.slViewModel = slViewModel;
+        this.addCollectionViewModel = addCollectionViewModel;
     }
 
     public SLPresenter() {

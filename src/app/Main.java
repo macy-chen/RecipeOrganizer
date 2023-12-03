@@ -1,11 +1,14 @@
 package app;
 
 import data_access.FileCollectionDataAccessObject;
+import data_access.ShoppingListDataAccessObject;
 import interface_adapter.*;
 import interface_adapter.add_to_collection.AddCollectionViewModel;
 import interface_adapter.search.SearchViewModel;
+import interface_adapter.shopping_list.SLViewModel;
 import interface_adapter.show_collection.ShowCollectionViewModel;
 import use_case.add_to_collection.AddCollectionCollectionDataAccessInterface;
+import use_case.shopping_list.SLDataAccessInterface;
 import view.ResultsView;
 import view.SearchView;
 import view.ViewManager;
@@ -32,7 +35,14 @@ public class Main {
 
         ShowCollectionViewModel showCollectionViewModel = new ShowCollectionViewModel();
 
-        SearchView searchView = SearchUseCaseFactory.create(viewManagerModel, searchViewModel, addCollectionViewModel, showCollectionViewModel);
+        SLViewModel shoppingListViewModel = new SLViewModel();
+        SLDataAccessInterface slDataAccessObject;
+
+        slDataAccessObject = new ShoppingListDataAccessObject("./ShoppingList.txt");
+
+
+        SearchView searchView = SearchUseCaseFactory.create(viewManagerModel, searchViewModel, addCollectionViewModel,
+                showCollectionViewModel, shoppingListViewModel, slDataAccessObject);
         views.add(searchView, searchView.viewName);
 
         AddCollectionCollectionDataAccessInterface addCollectionCollectionDataAccessInterface = new FileCollectionDataAccessObject("./recipe");

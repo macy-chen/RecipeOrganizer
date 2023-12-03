@@ -20,6 +20,11 @@ public class AddCollectionPresenter implements AddCollectionOutputBoundary {
     @Override
     public void prepareSuccessView(AddCollectionOutputData response) {
         System.out.println(response.getCollectionResults());
+
+        //new
+//        AddCollectionState addCollectionState = addCollectionViewModel.getState();
+//        addCollectionState.setRecipeResults(response.getCollectionResults());
+//        addCollectionViewModel.firePropertyChanged();
     }
 
     @Override
