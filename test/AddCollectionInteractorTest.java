@@ -5,17 +5,17 @@ import interface_adapter.add_to_collection.*;
 import interface_adapter.shopping_list.SLPresenter;
 import org.junit.Test;
 import use_case.add_to_collection.*;
+import use_case.search.*;
 import use_case.shopping_list.SLInteractor;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 import static org.junit.Assert.*;
 
 public class AddCollectionInteractorTest {
-    boolean popUpDiscovered = false;
+
     private List<Recipe> generateRecipeResults() {
         ArrayList<Nutrient> nutrients = new ArrayList<>();
         Nutrient n1 = new Nutrient("n1", 10.1f, "Macro");
@@ -117,5 +117,36 @@ public class AddCollectionInteractorTest {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private Recipe generateRecipe() {
+        ArrayList<Nutrient> nutrients = new ArrayList<>();
+        Nutrient n1 = new Nutrient("n1", 10.1f, "Macro");
+        nutrients.add(n1);
+        ArrayList<Ingredient> ingredients = new ArrayList<>();
+        Ingredient i1 = new Ingredient("i1", 20.0f, "g");
+        Recipe recipe = new Recipe("r1", ingredients, nutrients, 30.0f, "c1", 1, "url1");
+        return recipe;
+    }
+
+    @org.junit.Test
+    public void testAddCollectionFailView() throws IOException {
+        AddCollectionOutputBoundary successPresenter = new AddCollectionOutputBoundary() {
+            @Override
+            public void prepareSuccessView(AddCollectionOutputData results) {
+                fail();
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+                assertTrue(error.equals("r1 already exists in collection."));
+            }
+        };
+        int selectedBox = 0;
+        FileCollectionDataAccessObject collectionDataAccessObject = new FileCollectionDataAccessObject("./recipe");
+        collectionDataAccessObject.save(generateRecipe());
+        AddCollectionInputData addCollectionInputData = new AddCollectionInputData(selectedBox, generateRecipeResults());
+        AddCollectionInteractor addCollectionInteractor = new AddCollectionInteractor(collectionDataAccessObject,successPresenter);
+        addCollectionInteractor.execute(addCollectionInputData);
     }
 }
