@@ -1,24 +1,23 @@
 package interface_adapter;
 
+import entity.Recipe;
 import entity.RecipeCollection;
 
+import java.util.List;
+
 public class ShowCollectionState {
-    private RecipeCollection recipeCollection;
+    private List<Recipe> recipes;
     private String Error = null;
 
     public ShowCollectionState(ShowCollectionState copy) {
-        this.recipeCollection = copy.recipeCollection;
+        this.recipes = copy.recipes;
         this.Error = copy.Error;
     }
 
     public ShowCollectionState () {}
 
-    public RecipeCollection getRecipeCollection() {
-        return recipeCollection;
-    }
-
-    public void setCollection(RecipeCollection recipeCollection) {
-        this.recipeCollection = recipeCollection;
+    public void setCollection(List<Recipe> recipes) {
+        this.recipes = recipes;
     }
 
     public String getError() {
@@ -29,10 +28,5 @@ public class ShowCollectionState {
         this.Error = Error;
     }
 
-    @Override
-    public String toString() {
-        return "SignupState{" +
-                "recipecollection='" + recipeCollection + '\'' +
-                '}';
-    }
+    public List<Recipe> getRecipeList() {return recipes;}
 }

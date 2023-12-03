@@ -1,5 +1,6 @@
 package view;
 
+import entity.Recipe;
 import interface_adapter.*;
 
 import javax.swing.*;
@@ -10,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.List;
 
 public class SearchView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -22,12 +24,15 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private final JButton search;
     private final JButton showCollection;
     private final ShowCollectionViewModel showCollectionViewModel;
+    private final ShowCollectionController showCollectionController;
 
 
-    public SearchView(SearchController controller, SearchViewModel searchViewModel, ShowCollectionViewModel showCollectionViewModel) {
+    public SearchView(SearchController controller, SearchViewModel searchViewModel,
+                      ShowCollectionController showCollectionController, ShowCollectionViewModel showCollectionViewModel) {
         this.searchController = controller;
         this.searchViewModel = searchViewModel;
         this.showCollectionViewModel = showCollectionViewModel;
+        this.showCollectionController = showCollectionController;
         searchViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel(SearchViewModel.TITLE_LABEL);
@@ -58,8 +63,10 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(showCollection)) {
-                            showCollectionViewModel.updateListModelWithRecipes();
+                            ShowCollectionViewModel showCollectionViewModel = new ShowCollectionViewModel();
 
+                            ShowCollectionView showCollectionView = new ShowCollectionView(showCollectionViewModel, showCollectionController);
+                            // Call the controller to execute the use case
 
                         }
                     }
@@ -101,6 +108,6 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         SearchState state = (SearchState) evt.getNewValue();
         if (state.getSearchError() != null) {
             JOptionPane.showMessageDialog(this, state.getSearchError());
-        }
+            }
     }
 }
