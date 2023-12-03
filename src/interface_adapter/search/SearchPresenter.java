@@ -1,9 +1,10 @@
-package interface_adapter;
+package interface_adapter.search;
 
+import interface_adapter.ViewManagerModel;
 import interface_adapter.add_to_collection.AddCollectionState;
 import interface_adapter.add_to_collection.AddCollectionViewModel;
-import use_case.SearchOutputBoundary;
-import use_case.SearchOutputData;
+import use_case.search.SearchOutputBoundary;
+import use_case.search.SearchOutputData;
 
 public class SearchPresenter implements SearchOutputBoundary {
 
@@ -31,6 +32,8 @@ public class SearchPresenter implements SearchOutputBoundary {
 
     @Override
     public void prepareFailView(String error) {
-
+        SearchState searchState = searchViewModel.getState();
+        searchState.setSearchError(error);
+        searchViewModel.firePropertyChanged();
     }
 }

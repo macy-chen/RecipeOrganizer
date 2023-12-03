@@ -1,9 +1,10 @@
 package view;
 
-import interface_adapter.SearchController;
-import interface_adapter.SearchPresenter;
-import interface_adapter.SearchState;
-import interface_adapter.SearchViewModel;
+import interface_adapter.search.SearchController;
+import interface_adapter.search.SearchState;
+import interface_adapter.search.SearchViewModel;
+import interface_adapter.show_collection.ShowCollectionController;
+import interface_adapter.show_collection.ShowCollectionViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,10 +25,16 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
     private final JButton search;
     private final JButton showCollection;
+    private final ShowCollectionViewModel showCollectionViewModel;
+    private final ShowCollectionController showCollectionController;
 
-    public SearchView(SearchController controller, SearchViewModel searchViewModel) {
+
+    public SearchView(SearchController controller, SearchViewModel searchViewModel,
+                      ShowCollectionController showCollectionController, ShowCollectionViewModel showCollectionViewModel) {
         this.searchController = controller;
         this.searchViewModel = searchViewModel;
+        this.showCollectionViewModel = showCollectionViewModel;
+        this.showCollectionController = showCollectionController;
         searchViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel(SearchViewModel.TITLE_LABEL);
@@ -58,9 +65,11 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(showCollection)) {
-                            SearchState currentState = searchViewModel.getState();
+                            ShowCollectionViewModel showCollectionViewModel = new ShowCollectionViewModel();
 
-                            // searchController.execute(currentState.getKeyword());
+                            ShowCollectionView showCollectionView = new ShowCollectionView(showCollectionViewModel, showCollectionController);
+                            // Call the controller to execute the use case
+
                         }
                     }
                 }
@@ -98,6 +107,9 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        SearchState state = (SearchState) evt.getNewValue();
+        if (state.getSearchError() != null) {
+            JOptionPane.showMessageDialog(this, state.getSearchError());
+            }
     }
 }

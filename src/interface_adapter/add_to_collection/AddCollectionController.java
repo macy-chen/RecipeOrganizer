@@ -13,8 +13,8 @@ public class AddCollectionController {
         this.addCollectionUseCaseInteractor = addCollectionUseCaseInteractor;
     }
 
-    public void execute(List<Integer> selectedBoxes, List<Recipe> recipeResults) {
-        AddCollectionInputData addCollectionInputData = new AddCollectionInputData(selectedBoxes, recipeResults);
+    public void execute(Integer selectedBox, List<Recipe> recipeResults) {
+        AddCollectionInputData addCollectionInputData = new AddCollectionInputData(selectedBox, recipeResults);
 
         addCollectionUseCaseInteractor.execute(addCollectionInputData);
     }

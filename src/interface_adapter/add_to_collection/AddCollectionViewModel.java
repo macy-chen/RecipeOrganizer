@@ -8,6 +8,7 @@ import java.beans.PropertyChangeSupport;
 public class AddCollectionViewModel extends ViewModel {
     public static final String TITLE_LABEL = "Recipes";
     public static final String ADDCOLLECTION_BUTTON_LABEL = "Add To Collection";
+    public static final String BACK_BUTTON_LABEL = "Back";
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     private AddCollectionState state = new AddCollectionState();
 

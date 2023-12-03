@@ -7,16 +7,16 @@ import java.util.*;
 
 public class AddCollectionInputData {
 
-    final private List<Integer> selectedBoxes;
+    final private int selectedBox;
     final private List<Recipe> recipeResults;
-    public AddCollectionInputData(List<Integer> selectedBoxes,
+    public AddCollectionInputData(int selectedBox,
                                   List<Recipe> recipeResults) {
-        this.selectedBoxes = selectedBoxes;
+        this.selectedBox = selectedBox;
         this.recipeResults = recipeResults;
     }
 
-    List<Integer> getSelectedBoxes() {
-        return selectedBoxes;
+    int getSelectedBox() {
+        return selectedBox;
     }
     List<Recipe> getRecipeResults() {
         return recipeResults;

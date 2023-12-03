@@ -26,7 +26,7 @@ public class ShoppingList {
                 return;
             }
             //else{
-                //ingredients.add(newIngredient);
+            //ingredients.add(newIngredient);
             //}
 
         }

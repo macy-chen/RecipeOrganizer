@@ -1,8 +1,4 @@
-package interface_adapter;
-
-import entity.Recipe;
-
-import java.util.ArrayList;
+package interface_adapter.search;
 
 public class SearchState {
     private String keyword;

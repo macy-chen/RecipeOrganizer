@@ -5,7 +5,7 @@ import java.util.*;
 public class RecipeCollection {
     private ArrayList<Recipe> recipes;
 
-    public RecipeCollection(ArrayList<Recipe> recipes) {
+    RecipeCollection(ArrayList<Recipe> recipes) {
         this.recipes = recipes;
     }
 
@@ -16,8 +16,6 @@ public class RecipeCollection {
     public void addRecipe(Recipe recipe) {
         recipes.add(recipe);
     }
+    public ArrayList<Recipe> getRecipes() {return this.recipes;}
 
-    public ArrayList<Recipe> getRecipes() {
-        return recipes;
-    }
 }

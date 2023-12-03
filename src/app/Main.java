@@ -1,9 +1,10 @@
 package app;
 
 import data_access.FileCollectionDataAccessObject;
-import interface_adapter.SearchViewModel;
-import interface_adapter.ViewManagerModel;
+import interface_adapter.*;
 import interface_adapter.add_to_collection.AddCollectionViewModel;
+import interface_adapter.search.SearchViewModel;
+import interface_adapter.show_collection.ShowCollectionViewModel;
 import use_case.add_to_collection.AddCollectionCollectionDataAccessInterface;
 import view.ResultsView;
 import view.SearchView;
@@ -29,7 +30,9 @@ public class Main {
 
         AddCollectionViewModel addCollectionViewModel = new AddCollectionViewModel();
 
-        SearchView searchView = SearchUseCaseFactory.create(viewManagerModel, searchViewModel, addCollectionViewModel);
+        ShowCollectionViewModel showCollectionViewModel = new ShowCollectionViewModel();
+
+        SearchView searchView = SearchUseCaseFactory.create(viewManagerModel, searchViewModel, addCollectionViewModel, showCollectionViewModel);
         views.add(searchView, searchView.viewName);
 
         AddCollectionCollectionDataAccessInterface addCollectionCollectionDataAccessInterface = new FileCollectionDataAccessObject("./recipe");

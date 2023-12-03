@@ -10,13 +10,13 @@ public class Recipe {
 
     private String name;
     private ArrayList<Ingredient> ingredients;
-    private ArrayList<String> nutrients;
+    private ArrayList<Nutrient> nutrients;
     private Float calories;
-    private ArrayList<String> culture;
+    private String culture;
     private Integer portion;
     private String url;
 
-    public Recipe(String name, ArrayList<Ingredient> ingredients, ArrayList<String> nutrients, Float calories, ArrayList<String> culture, Integer portion, String url) {
+    public Recipe(String name, ArrayList<Ingredient> ingredients, ArrayList<Nutrient> nutrients, Float calories, String culture, Integer portion, String url) {
         this.name = name;
         this.ingredients = ingredients;
         this.nutrients = nutrients;
@@ -37,7 +37,7 @@ public class Recipe {
         return ingredients;
     }
 
-    public ArrayList<String> getNutrients() {
+    public ArrayList<Nutrient> getNutrients() {
         return nutrients;
     }
 
@@ -45,7 +45,7 @@ public class Recipe {
         return calories;
     }
 
-    public ArrayList<String> getCulture() {
+    public String getCulture() {
         return culture;
     }
 
@@ -65,7 +65,7 @@ public class Recipe {
         this.ingredients = ingredients;
     }
 
-    public void setNutrients(ArrayList<String> nutrients) {
+    public void setNutrients(ArrayList<Nutrient> nutrients) {
         this.nutrients = nutrients;
     }
 
@@ -73,7 +73,7 @@ public class Recipe {
         this.calories = calories;
     }
 
-    public void setCulture(ArrayList<String> culture) {
+    public void setCulture(String culture) {
         this.culture = culture;
     }
 
