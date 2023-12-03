@@ -46,44 +46,6 @@ public class IngredientImplementation implements ingredientAPI {
         }
     }
 
-/*    @Override
-    public ArrayList<Nutrient> getIngredientNutrients(String ingredientName) {
-                OkHttpClient client = new OkHttpClient().newBuilder()
-                .build();
-        Request request = new Request.Builder()
-                .url("https://api.edamam.com/api/nutrition-data?app_id=" + getAppId() + "&app_key=" + getApiToken() +
-                        "&nutrition-type=cooking&ingr=" + ingredientName)
-                .addHeader("Authorization", API_TOKEN)
-                .addHeader("Content-Type", "application/json")
-                .build();
-        try {
-            Response response = client.newCall(request).execute();
-            JSONObject responseBody = new JSONObject(response.body().string());
-
-            if (response.code() == 200) {
-                JSONObject nutrientList = responseBody.getJSONObject("totalNutrients");
-                ArrayList<Nutrient> nutrients = new ArrayList<Nutrient>();
-                for (Iterator<String> it = nutrientList.keys(); it.hasNext(); ) {
-                       String key = it.next();
-                       JSONObject currNutrient = nutrientList.getJSONObject(key);
-                       Nutrient newNutrient;
-                       String name = currNutrient.getString("label");
-                       Float amount = currNutrient.getFloat("quantity");
-                       String measure = currNutrient.getString("unit");
-                       newNutrient = new Nutrient(name, amount, measure);
-                       nutrients.add(newNutrient);
-                   }
-                return nutrients;
-
-
-            } else {
-                throw new RuntimeException(responseBody.getString("message"));
-            }
-        } catch (IOException | JSONException e) {
-            throw new RuntimeException(e);
-        }
-    }*/
-
 
 public static void main(String[] args) {
     IngredientImplementation imp = new IngredientImplementation();

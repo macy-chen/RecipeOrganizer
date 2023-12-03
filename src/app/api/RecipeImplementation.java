@@ -2,6 +2,8 @@ package app.api;
 
 import java.security.Key;
 import java.util.ArrayList;
+
+import entity.Nutrient;
 import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,26 +53,32 @@ public class RecipeImplementation implements recipeAPI {
                 if (hits.isEmpty()) {
                     return recipes;
                 }
+
+                if (hits.length() < 5) {
+                    return recipes;
+                }
                 for (int i = 0; i < 5; i++) {
                     JSONObject curr = hits.getJSONObject(i);
                     JSONObject currRecipe = curr.getJSONObject("recipe");
+
                     String name = currRecipe.getString("label");
+
                     JSONArray ingredientArray = currRecipe.getJSONArray("ingredients");
                     ArrayList<Ingredient> recipeIngredients = ingredientHelper(ingredientArray);
+
                     String url = currRecipe.getString("url");
+
                     Float calories = currRecipe.getFloat("calories");
+
                     JSONArray cuisine = currRecipe.getJSONArray("cuisineType");
                     String culture = cuisine.getString(0);
-                    ArrayList<String> recipeNutrients = new ArrayList<>(); // remove later
-                    JSONObject nutrients = currRecipe.getJSONObject("totalNutrients"); //remove later
-                    // JSONObject nutrientObject = currRecipe.getJSONObject("totalNutrients");
-                    // ArrayList<Nutrient> nutrients = nutrientHelper(nutrientObject);
-                    for (Iterator<String> it = nutrients.keys(); it.hasNext(); ) { // remove later
-                        String key = it.next();
-                        recipeNutrients.add(nutrients.getJSONObject(key).getString("label"));
-                    }
+
+                    JSONObject nutrientObject = currRecipe.getJSONObject("totalNutrients");
+                    ArrayList<Nutrient> nutrients = nutrientHelper(nutrientObject);
+
                     Integer portion = currRecipe.getInt("yield");
-                    Recipe recipe = new Recipe(name, recipeIngredients, recipeNutrients, calories, culture, portion, url); // change later
+
+                    Recipe recipe = new Recipe(name, recipeIngredients, nutrients, calories, culture, portion, url); // change later
                     recipes.add(recipe);
                 }
 
@@ -94,7 +102,6 @@ public class RecipeImplementation implements recipeAPI {
             if (!(amount == 0)) { // amount of salt, pepper, etc. is 0, so use if statement to avoid trying to use getString() null
                 measurement = currIngredient.getString("measure");
             }
-            String category = currIngredient.getString("foodCategory"); // might use?
             IngredientImplementation ingCaloriesNutrients = new IngredientImplementation();
             //Float calories = ingCaloriesNutrients.getIngredientCalories(currIngredient.getString("text")); // might use?
             newIngredient = new Ingredient(name, amount, measurement);
@@ -103,7 +110,7 @@ public class RecipeImplementation implements recipeAPI {
         return ingredients;
     }
 
-/*    private ArrayList<Nutrient> nutrientHelper(JSONObject nutrientsObject) {
+    private ArrayList<Nutrient> nutrientHelper(JSONObject nutrientsObject) {
         ArrayList<Nutrient> nutrients = new ArrayList<Nutrient>();
         for (Iterator<String> it = nutrientsObject.keys(); it.hasNext(); ) {
             String key = it.next();
@@ -116,7 +123,68 @@ public class RecipeImplementation implements recipeAPI {
             nutrients.add(newNutrient);
         }
         return nutrients;
-    }*/
+    }
+
+    /**
+     * This is the exact same as getResults except it returns every single recipe instead of the first 5.
+     * So that the correct recipe can be re-loaded into FileCollection (because sometimes the correct rercipe
+     * wasn't in the first 5 recipes).
+     * (FileCollection matches the correct recipe according to the num of calories.)
+     */
+    public ArrayList<Recipe> getResultsDAO(String keyword) {
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        MediaType mediaType = MediaType.parse("application/json");
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("q", keyword);
+        RequestBody body = RequestBody.create(mediaType, requestBody.toString());
+        Request request = new Request.Builder()
+                .url("https://api.edamam.com/api/recipes/v2/?type=public&q=" + keyword + "&app_id=" + getAppId() + "&app_key=" + getApiToken())
+                .addHeader("Authorization", API_TOKEN)
+                .addHeader("Content-Type", "application/json")
+                .build();
+
+        try {
+            Response response = client.newCall(request).execute();
+            JSONObject responseBody = new JSONObject(response.body().string());
+
+            if (response.code() == 200) {
+                JSONArray hits = responseBody.getJSONArray("hits");
+                ArrayList<Recipe> recipes = new ArrayList<Recipe>();
+                if (hits.isEmpty()) {
+                    return recipes;
+                }
+                for (int i = 0; i < hits.length(); i++) {
+                    JSONObject curr = hits.getJSONObject(i);
+                    JSONObject currRecipe = curr.getJSONObject("recipe");
+                    String name = currRecipe.getString("label");
+
+                    JSONArray ingredientArray = currRecipe.getJSONArray("ingredients");
+                    ArrayList<Ingredient> recipeIngredients = ingredientHelper(ingredientArray);
+
+                    String url = currRecipe.getString("url");
+
+                    Float calories = currRecipe.getFloat("calories");
+
+                    JSONArray cuisine = currRecipe.getJSONArray("cuisineType");
+                    String culture = cuisine.getString(0);
+
+                    JSONObject nutrientObject = currRecipe.getJSONObject("totalNutrients");
+                    ArrayList<Nutrient> nutrients = nutrientHelper(nutrientObject);
+
+                    Integer portion = currRecipe.getInt("yield");
+                    Recipe recipe = new Recipe(name, recipeIngredients, nutrients, calories, culture, portion, url); // change later
+                    recipes.add(recipe);
+                }
+
+                return recipes;
+            } else {
+                throw new RuntimeException(responseBody.getString("message"));
+            }
+        } catch (IOException | JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
     public static void main(String[] args) {

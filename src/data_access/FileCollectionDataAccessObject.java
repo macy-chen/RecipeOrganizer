@@ -1,5 +1,6 @@
 package data_access;
 
+import app.api.RecipeImplementation;
 import entity.Recipe;
 import use_case.ShowCollectionCollectionDataAccessInterface;
 import use_case.ShowCollectionInputData;
@@ -27,7 +28,29 @@ public class FileCollectionDataAccessObject implements AddCollectionCollectionDa
         headers.put("culture", 1);
         headers.put("calories", 2);
 
-        save();
+        if (csvFile.length() == 0) {
+            save();
+        } else {
+
+            try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
+                String header = reader.readLine();
+
+                String row;
+                while ((row = reader.readLine()) != null) {
+                    String[] col = row.split(",");
+                    String name = String.valueOf(col[headers.get("name")]);
+                    String culture = String.valueOf(col[headers.get("culture")]);
+                    String calories = String.valueOf(col[headers.get("calories")]);
+                    RecipeImplementation recipeImplementation = new RecipeImplementation();
+                    List<Recipe> recipes = recipeImplementation.getResultsDAO(name);
+                    for (Recipe recipe : recipes) {
+                        if (recipe.getCalories().toString().equals(calories)) {
+                            collection.put(name, recipe);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @Override
