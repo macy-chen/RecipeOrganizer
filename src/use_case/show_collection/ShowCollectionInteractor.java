@@ -25,9 +25,11 @@ public class ShowCollectionInteractor implements ShowCollectionInputBoundary {
 
     public List<Recipe> execute() {
         List<Recipe> collections = collectionDataAccessObject.load(showCollectionInputData);
-        for (Recipe collection: collections) {
-            ShowCollectionOutputData showCollectionOutputData = new ShowCollectionOutputData(collection.getName(), collection.getCalories(), collection.getCulture());
+        ShowCollectionOutputData showCollectionOutputData = null;
+        for (Recipe collection : collections) {
+            showCollectionOutputData = new ShowCollectionOutputData(collection.getName(), collection.getCalories(), collection.getCulture());
         }
+        showCollectionPresenter.prepareSuccessView(showCollectionOutputData);
         return collections;
     }
 }
