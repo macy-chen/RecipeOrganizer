@@ -14,8 +14,8 @@ public class SLController {
         this.slInputUseCaseInteractor = slInputUseCaseInteractor;
     }
 
-    public void execute(RecipeCollection recipeCollection) throws IOException {
-        SLInputData slInputData = new SLInputData(recipeCollection);
+    public void execute(String path) throws IOException {
+        SLInputData slInputData = new SLInputData(path);
         slInputUseCaseInteractor.execute(slInputData);
     }
 }

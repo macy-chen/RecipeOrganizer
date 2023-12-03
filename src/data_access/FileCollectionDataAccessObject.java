@@ -19,6 +19,8 @@ public class FileCollectionDataAccessObject implements AddCollectionCollectionDa
 
     private final Map<String, Recipe> collection = new HashMap<>();
 
+    //public FileCollectionDataAccessObject(){}
+
     public FileCollectionDataAccessObject(String csvPath) throws IOException {
         csvFile = new File(csvPath);
         headers.put("name", 0);

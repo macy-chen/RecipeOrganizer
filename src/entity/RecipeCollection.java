@@ -5,7 +5,7 @@ import java.util.*;
 public class RecipeCollection {
     private ArrayList<Recipe> recipes;
 
-    RecipeCollection(ArrayList<Recipe> recipes) {
+    public RecipeCollection(ArrayList<Recipe> recipes) {
         this.recipes = recipes;
     }
 
