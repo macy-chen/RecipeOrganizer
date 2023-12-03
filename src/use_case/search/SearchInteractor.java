@@ -1,4 +1,4 @@
-package use_case;
+package use_case.search;
 
 import app.api.RecipeImplementation;
 import entity.Recipe;
