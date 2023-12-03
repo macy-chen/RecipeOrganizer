@@ -2,8 +2,7 @@ package view;
 
 import app.Main;
 import entity.Recipe;
-import interface_adapter.SearchState;
-import interface_adapter.SearchViewModel;
+import interface_adapter.search.SearchViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.add_to_collection.AddCollectionController;
 import interface_adapter.add_to_collection.AddCollectionState;
@@ -14,12 +13,9 @@ import java.io.IOException;
 import java.util.*;
 import java.util.List;
 import javax.swing.*;
-import javax.swing.text.html.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.beans.PropertyChangeListener;
 
 public class ResultsView extends JPanel implements ActionListener, PropertyChangeListener {

@@ -1,7 +1,9 @@
 package view;
 
-import entity.Recipe;
 import interface_adapter.*;
+import interface_adapter.search.SearchController;
+import interface_adapter.search.SearchState;
+import interface_adapter.search.SearchViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +13,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.List;
 
 public class SearchView extends JPanel implements ActionListener, PropertyChangeListener {
 

@@ -2,7 +2,13 @@ package app;
 
 import interface_adapter.*;
 import interface_adapter.add_to_collection.AddCollectionViewModel;
+import interface_adapter.search.SearchController;
+import interface_adapter.search.SearchPresenter;
+import interface_adapter.search.SearchViewModel;
 import use_case.*;
+import use_case.search.SearchInputBoundary;
+import use_case.search.SearchInteractor;
+import use_case.search.SearchOutputBoundary;
 import view.SearchView;
 
 import javax.swing.*;

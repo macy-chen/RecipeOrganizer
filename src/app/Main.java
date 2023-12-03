@@ -3,14 +3,10 @@ package app;
 import data_access.FileCollectionDataAccessObject;
 import interface_adapter.*;
 import interface_adapter.add_to_collection.AddCollectionViewModel;
-import use_case.ShowCollectionCollectionDataAccessInterface;
-import use_case.ShowCollectionInputData;
-import use_case.ShowCollectionInteractor;
-import use_case.ShowCollectionOutputBoundary;
+import interface_adapter.search.SearchViewModel;
 import use_case.add_to_collection.AddCollectionCollectionDataAccessInterface;
 import view.ResultsView;
 import view.SearchView;
-import view.ShowCollectionView;
 import view.ViewManager;
 
 import javax.swing.*;
