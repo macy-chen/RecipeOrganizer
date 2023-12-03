@@ -2,6 +2,7 @@ package app.api;
 
 import java.security.Key;
 import java.util.ArrayList;
+import entity.Ingredient;
 import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,13 +51,13 @@ public class RecipeImplementation implements recipeAPI {
                     JSONObject curr = hits.getJSONObject(i);
                     JSONObject currRecipe = curr.getJSONObject("recipe");
                     String name = currRecipe.getString("label");
-                    JSONArray ingredients = currRecipe.getJSONArray("ingredientLines"); // remove later
-                    // JSONArray ingredientArray = currRecipe.getJSONArray("ingredients");
-                    // ArrayList<Ingredient> ingredients = ingredientHelper(ingredientArray);
+                    //JSONArray ingredients = currRecipe.getJSONArray("ingredientLines"); // remove later
+                    JSONArray ingredientArray = currRecipe.getJSONArray("ingredients");
+                    ArrayList<Ingredient> ingredients = ingredientHelper(ingredientArray);
                     String url = currRecipe.getString("url");
-                    ArrayList<String> recipeIngredients = new ArrayList<>(); // remove later
-                    for (int j = 0; j < ingredients.length(); j++) // remove later
-                        recipeIngredients.add(ingredients.getString(j));
+                    //ArrayList<String> recipeIngredients = new ArrayList<>(); // remove later
+                    //for (int j = 0; j < ingredients.length(); j++) // remove later
+                        //recipeIngredients.add(ingredients.getString(j));
                     Float calories = currRecipe.getFloat("calories");
                     JSONArray cuisine = currRecipe.getJSONArray("cuisineType");
                     ArrayList<String> recipeCulture = new ArrayList<>();
@@ -71,7 +72,7 @@ public class RecipeImplementation implements recipeAPI {
                         recipeNutrients.add(nutrients.getJSONObject(key).getString("label"));
                     }
                     Integer portion = currRecipe.getInt("yield");
-                    Recipe recipe = new Recipe(name, recipeIngredients, recipeNutrients, calories, recipeCulture, portion, url); // change later
+                    Recipe recipe = new Recipe(name, ingredients, recipeNutrients, calories, recipeCulture, portion, url); // change later
                     recipes.add(recipe);
                 }
 
@@ -84,20 +85,21 @@ public class RecipeImplementation implements recipeAPI {
         }
     }
 
-/*    private ArrayList<Ingredient> ingredientHelper(JSONArray ingredientsArray) {
+   private ArrayList<Ingredient> ingredientHelper(JSONArray ingredientsArray) {
         ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
         for (int j = 0; j < ingredientsArray.length(); j++) {
             JSONObject currIngredient = ingredientsArray.getJSONObject(j);
             Ingredient newIngredient;
             String name = currIngredient.getString("food");
             Float amount = currIngredient.getFloat("quantity");
-            String measurement = currIngredient.getString("measure");
-            String category = currIngredient.getString("foodCategory");
-            newIngredient = new Ingredient(name, amount, category, measurement);
+            //String measurement = currIngredient.getString("measure");
+            //String category = currIngredient.getString("foodCategory");
+            //newIngredient = new Ingredient(name, amount, category, measurement);
+            newIngredient = new Ingredient(name, amount, "");
             ingredients.add(newIngredient);
         }
         return ingredients;
-    }*/
+    }
 
 /*    private ArrayList<Nutrient> nutrientHelper(JSONObject nutrientsObject) {
         ArrayList<Nutrient> nutrients = new ArrayList<Nutrient>();

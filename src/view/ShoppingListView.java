@@ -1,6 +1,7 @@
 package view;
 
 import entity.RecipeCollection;
+import interface_adapter.add_to_collection.AddCollectionState;
 import interface_adapter.shopping_list.SLController;
 import interface_adapter.shopping_list.SLState;
 import interface_adapter.shopping_list.SLViewModel;
@@ -52,6 +53,7 @@ public class ShoppingListView extends JPanel implements ActionListener, Property
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource().equals(generateSL)) { //when clicked
+
                             SLState currentState = slViewModel.getState(); //TODO: take from addToCollectionState?
                             RecipeCollection c = currentState.getRecipeCollection();
 

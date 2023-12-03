@@ -24,6 +24,13 @@ public class Ingredient {
         this.measurement = measurement;
     }
 
+    public Ingredient(String name, Float amount, String category, String measurement) {
+        this.name = name;
+        this.amount = amount;
+        this.measurement = measurement;
+        this.category = category;
+    }
+
     public String getName() {
         return name;
     }
