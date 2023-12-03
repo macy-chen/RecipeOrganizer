@@ -1,13 +1,28 @@
 package interface_adapter;
 
-public class ShowCollectionPresenter {
-    private final ShowCollectionController showCollectionController;
+import use_case.ShowCollectionOutputBoundary;
+import use_case.ShowCollectionOutputData;
 
-    public ShowCollectionPresenter(ShowCollectionController showCollectionController) {
-        this.showCollectionController = showCollectionController;
+public class ShowCollectionPresenter implements ShowCollectionOutputBoundary {
+    private final ShowCollectionViewModel showCollectionViewModel;
+    private ViewManagerModel viewManagerModel;
+
+    public ShowCollectionPresenter(ShowCollectionViewModel showCollectionViewModel, ViewManagerModel viewManagerModel) {
+        this.showCollectionViewModel = showCollectionViewModel;
+        this.viewManagerModel = viewManagerModel;
+        //this.showCollectionViewModel = showCollectionViewModel;
     }
 
-    public void showCollectionRequested() {
-        showCollectionController.execute();
+    @Override
+    public void prepareSuccessView(ShowCollectionOutputData showCollectionOutputData) {
+        System.out.println("Show Collection Presenter prepareSuccessView called");
+        System.out.println(showCollectionOutputData);
+    }
+
+    @Override
+    public void prepareFailView(String error) {
+        ShowCollectionState showCollectionState = showCollectionViewModel.getState();
+        showCollectionState.setError(error);
+        showCollectionViewModel.firePropertyChanged();
     }
 }
