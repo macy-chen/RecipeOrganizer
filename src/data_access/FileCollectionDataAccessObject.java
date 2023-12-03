@@ -2,18 +2,15 @@ package data_access;
 
 import app.api.RecipeImplementation;
 import entity.Recipe;
-import use_case.ShowCollectionCollectionDataAccessInterface;
-import use_case.ShowCollectionInputData;
+import use_case.show_collection.ShowCollectionCollectionDataAccessInterface;
+import use_case.show_collection.ShowCollectionInputData;
 import use_case.add_to_collection.AddCollectionCollectionDataAccessInterface;
 
 import java.io.*;
-import java.time.LocalDateTime;
 import java.util.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-
-import static java.util.Collections.emptyList;
 
 public class FileCollectionDataAccessObject implements AddCollectionCollectionDataAccessInterface, ShowCollectionCollectionDataAccessInterface {
     private final File csvFile;

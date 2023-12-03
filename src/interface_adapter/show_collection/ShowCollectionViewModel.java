@@ -1,6 +1,7 @@
-package interface_adapter;
+package interface_adapter.show_collection;
 
 import interface_adapter.ViewModel;
+import interface_adapter.show_collection.ShowCollectionState;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

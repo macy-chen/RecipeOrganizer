@@ -1,9 +1,10 @@
 package view;
 
-import interface_adapter.*;
 import interface_adapter.search.SearchController;
 import interface_adapter.search.SearchState;
 import interface_adapter.search.SearchViewModel;
+import interface_adapter.show_collection.ShowCollectionController;
+import interface_adapter.show_collection.ShowCollectionViewModel;
 
 import javax.swing.*;
 import java.awt.*;
