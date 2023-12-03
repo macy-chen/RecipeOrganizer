@@ -13,9 +13,9 @@ public class ShowCollectionInteractor implements ShowCollectionInputBoundary {
     private final FileCollectionDataAccessObject collectionDataAccessObject;
     private final ShowCollectionInputData showCollectionInputData;
 
-    public ShowCollectionInteractor(ShowCollectionOutputBoundary showCollectionPresenter, ShowCollectionInputData showCollectionInputData) {
+    public ShowCollectionInteractor(ShowCollectionOutputBoundary showCollectionPresenter) {
         this.showCollectionPresenter = showCollectionPresenter;
-        this.showCollectionInputData = showCollectionInputData;
+        this.showCollectionInputData = new ShowCollectionInputData();
 
         try {
             this.collectionDataAccessObject = new FileCollectionDataAccessObject(showCollectionInputData.getFilePath());
