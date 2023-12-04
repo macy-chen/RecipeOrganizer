@@ -1,13 +1,12 @@
 package test;
 
 import app.Main;
-import entity.Recipe;
-import use_case.*;
+import use_case.search.*;
 import view.SearchView;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
+import java.io.IOException;
 
 import static org.junit.Assert.*;
 
@@ -64,14 +63,14 @@ public class SearchTest {
         return (JButton) buttons.getComponent(1);
     }
     @org.junit.Test
-    public void testSearchButtonPresent() {
+    public void testSearchButtonPresent() throws IOException {
         Main.main(null);
         JButton button = getSearchButton();
         assert(button.getText().equals("Search"));
     }
 
     @org.junit.Test
-    public void testShowCollectionButtonPresent() {
+    public void testShowCollectionButtonPresent() throws IOException {
         Main.main(null);
         JButton button = getShowCollectionButton();
         assert(button.getText().equals("Show Collection"));

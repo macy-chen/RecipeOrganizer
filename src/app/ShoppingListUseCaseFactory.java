@@ -1,7 +1,6 @@
 package app;
 
 
-import entity.ShoppingList;
 import entity.ShoppingListFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.add_to_collection.AddCollectionViewModel;
@@ -23,7 +22,7 @@ public class ShoppingListUseCaseFactory {
                                                          SLViewModel slViewmodel,
                                                          AddCollectionViewModel addCollectionViewModel,
                                                          SLDataAccessInterface slDataObject) throws IOException{
-        SLOutputBoundary slOutputBoundary = new SLPresenter(viewManagerModel, slViewmodel, addCollectionViewModel);
+        SLOutputBoundary slOutputBoundary = new SLPresenter(viewManagerModel, slViewmodel);
         ShoppingListFactory shoppingListFactory = new ShoppingListFactory();
 
         SLInputBoundary slInteractor= new SLInteractor(slDataObject, slOutputBoundary, shoppingListFactory);
