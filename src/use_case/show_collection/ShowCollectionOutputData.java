@@ -15,4 +15,16 @@ public class ShowCollectionOutputData {
         this.culture = culture;
     }
 
+
+    public String getName() {
+        return name;
+    }
+
+    public Float getCalories() {
+        return calories;
+    }
+
+    public String getCulture() {
+        return culture;
+    }
 }
