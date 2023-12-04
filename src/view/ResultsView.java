@@ -59,22 +59,11 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent evt) {
-                        JFrame app = null;
-                        Window[] windows = Window.getWindows();
-                        for (Window window : windows) {
-                            if (window instanceof JFrame) {
-                                app = (JFrame) window;
-                            }
-                        }
-                        if (evt.getSource().equals(back)) {
-                            try {
-                                app.dispose();
-                                Main.main(null);
-                                System.out.println();
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
+                        setVisible(false);
+                        ViewManagerModel viewManagerModel = new ViewManagerModel();
+                        SearchViewModel searchViewModel = new SearchViewModel();
+                        viewManagerModel.setActiveView(searchViewModel.getViewName());
+                        viewManagerModel.firePropertyChanged();
                     }
                 }
         );

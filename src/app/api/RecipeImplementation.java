@@ -98,7 +98,7 @@ public class RecipeImplementation implements recipeAPI {
             Ingredient newIngredient;
             String name = currIngredient.getString("food");
             Float amount = currIngredient.getFloat("quantity");
-            String measurement = null; // the measurement of some things like salt/pepper is null
+            String measurement = "N/A"; // the measurement of some things like salt/pepper is null
             if (!(amount == 0)) { // amount of salt, pepper, etc. is 0, so use if statement to avoid trying to use getString() null
                 measurement = currIngredient.getString("measure");
             }
