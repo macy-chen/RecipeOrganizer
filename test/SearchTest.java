@@ -1,4 +1,3 @@
-package test;
 
 import app.Main;
 import use_case.search.*;
