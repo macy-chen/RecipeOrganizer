@@ -73,7 +73,7 @@ public class SearchUseCaseFactory {
                                                          SLViewModel slViewmodel,
                                                          AddCollectionViewModel addCollectionViewModel,
                                                          SLDataAccessInterface slDataObject) throws IOException{
-        SLOutputBoundary slOutputBoundary = new SLPresenter(viewManagerModel, slViewmodel, addCollectionViewModel);
+        SLOutputBoundary slOutputBoundary = new SLPresenter(viewManagerModel, slViewmodel);
         ShoppingListFactory shoppingListFactory = new ShoppingListFactory();
 
         SLInputBoundary slInteractor= new SLInteractor(slDataObject, slOutputBoundary, shoppingListFactory);

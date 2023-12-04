@@ -1,20 +1,15 @@
-import app.Main;
 import data_access.ShoppingListDataAccessObject;
 import entity.Ingredient;
-import entity.Recipe;
-import entity.RecipeCollection;
 import entity.ShoppingList;
 import org.junit.Test;
 
-import java.io.File;
+import java.io.*;
 import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class ShoppingListDataAccessObjectTest {
 
 
-    ShoppingListDataAccessObject shoppingListDataAccessObject = new ShoppingListDataAccessObject("./ShoppingList.txt");
+    ShoppingListDataAccessObject shoppingListDataAccessObject = new ShoppingListDataAccessObject("./ShoppingListTest.txt");
 
     private ShoppingList generateSL1(){ //creates ingredient list --> shopping List
         Ingredient ingredient1 = new Ingredient("Bean", 100.0F, "g");
@@ -45,21 +40,60 @@ public class ShoppingListDataAccessObjectTest {
     @Test
     public void testFileExists(){
         shoppingListDataAccessObject.save(generateSL1());
-        assert (new File("./ShoppingList.txt").exists());
+        assert (new File("./ShoppingListTest.txt").exists());
     }
 
     @Test
     public void testMultipleIngredients(){
         shoppingListDataAccessObject.save(generateSL2());
-        File f = new File("./ShoppingList.txt");
-        //TODO: add assert to check contents
+        File f = new File("./ShoppingListTest.txt");
+        String s;
+        String last;
+
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader("./ShoppingListTest.txt"));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            s = reader.readLine();
+            s = reader.readLine();
+            s = reader.readLine();
+            last = reader.readLine();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        assert(s.contains("Pork") && last.contains("cup"));
+
     }
 
     @Test
     public void testOneIngredient(){
         shoppingListDataAccessObject.save(generateSL3());
         File f = new File("./ShoppingList.txt");
-        //TODO: add assert to formally check contents
+        String s;
+
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader("./ShoppingListTest.txt"));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            s = reader.readLine();
+            s = reader.readLine();
+            s = reader.readLine();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        assert(s.contains("Bean") );
     }
 
 
