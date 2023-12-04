@@ -12,15 +12,11 @@ public class ShowCollectionInteractor implements ShowCollectionInputBoundary {
     private final FileCollectionDataAccessObject collectionDataAccessObject;
     private final ShowCollectionInputData showCollectionInputData;
 
-    public ShowCollectionInteractor(ShowCollectionOutputBoundary showCollectionPresenter) {
+    public ShowCollectionInteractor(ShowCollectionOutputBoundary showCollectionPresenter) throws IOException {
         this.showCollectionPresenter = showCollectionPresenter;
         this.showCollectionInputData = new ShowCollectionInputData();
 
-        try {
-            this.collectionDataAccessObject = new FileCollectionDataAccessObject(showCollectionInputData.getFilePath());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        this.collectionDataAccessObject = new FileCollectionDataAccessObject(showCollectionInputData.getFilePath());
     }
 
     public List<Recipe> execute() {

@@ -44,7 +44,7 @@ public class ShowCollectionTest {
     }
 
     @org.junit.Test
-    public void testSuccessTest() {
+    public void testSuccessTest() throws IOException {
         ShowCollectionOutputBoundary successPresenter = new ShowCollectionOutputBoundary() {
             @Override
             public void prepareSuccessView(ShowCollectionOutputData results) {
@@ -59,5 +59,17 @@ public class ShowCollectionTest {
         };
         ShowCollectionInputBoundary interactor = new ShowCollectionInteractor(successPresenter);
         interactor.execute();
+    }
+
+    @org.junit.Test
+    public void showCollectionOutputDataGetCaloriesTest() {
+        ShowCollectionOutputData showCollectionOutputData = new ShowCollectionOutputData("n1", 10.0f, "c1");
+        assert (showCollectionOutputData.getCalories().equals(10.0f));
+    }
+
+    @org.junit.Test
+    public void showCollectionOutputDataGetCultureTest() {
+        ShowCollectionOutputData showCollectionOutputData = new ShowCollectionOutputData("n1", 10.0f, "c1");
+        assert (showCollectionOutputData.getCulture().equals("c1"));
     }
 }
