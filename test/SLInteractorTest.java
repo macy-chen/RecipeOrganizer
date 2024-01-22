@@ -198,7 +198,4 @@ public class SLInteractorTest {
 
         assertEquals("Recipe Collection is empty", tempState.getShoppingListError());
     }
-
-
-
 }
